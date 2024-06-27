@@ -9,15 +9,17 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { CopyCheckIcon, CopyIcon } from 'lucide-react';
+import { sampleData1, sampleData2 } from '@/lib/sampleData';
 
 const NewSimulation = () => {
   const [isCopied1, setIsCopied1] = useState(false);
   const [isCopied2, setIsCopied2] = useState(false);
 
-  const handleCopy = (text: string, setIsCopied: { (value: React.SetStateAction<boolean>): void; (value: React.SetStateAction<boolean>): void; (arg0: boolean): any; }) => {
-    navigator.clipboard.writeText(text)
-      .then(() => setIsCopied(true))
-      .catch((err) => console.error('Failed to copy text: ', err));
+  const copyToClipboard = (text: string, setCopied: { (value: React.SetStateAction<boolean>): void; (value: React.SetStateAction<boolean>): void; (arg0: boolean): void; }) => {
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
@@ -34,26 +36,20 @@ const NewSimulation = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className='flex justify-center'>Sample Data 1</DialogTitle>
+                <DialogTitle className='flex justify-center mb-4'>Sample Data 1</DialogTitle>
                 <DialogDescription>
-
                   <div className="relative">
-
-                    <button
-                      onClick={() => handleCopy(
-                        "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-                        setIsCopied1
-                      )}
-                      className="absolute top-2 right-2 mb-4 p-1 text-sm  text-white rounded"
-                    >
-                      {isCopied1 ? <CopyCheckIcon className='w-4 h-4 text-green-600 font-semibold' /> : <CopyIcon className='w-4 h-4 text-white font-semibold' />}
-                    </button>
-                    <pre className="p-4 bg-black text-white rounded overflow-x-auto ">
+                    <pre className="p-4 bg-black text-white rounded overflow-x-auto">
                       <code className="whitespace-pre-wrap">
-                        This action cannot be undone.  This action cannot be undone.  This action cannot be undone.  This action cannot be undone.  This action cannot be undone.  This action cannot be undone.  This action cannot be undone.  This action cannot be undone.
+                        {sampleData1}
                       </code>
                     </pre>
-
+                    <button
+                      onClick={() => copyToClipboard(sampleData1, setIsCopied1)}
+                      className="absolute top-2 right-2 p-1 text-sm rounded"
+                    >
+                      {isCopied1 ? <CopyCheckIcon className="h-4 w-4 text-green-500" /> : <CopyIcon className="h-4 w-4 text-white" />}
+                    </button>
                   </div>
                 </DialogDescription>
               </DialogHeader>
@@ -66,22 +62,19 @@ const NewSimulation = () => {
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
-                <DialogTitle className='flex justify-center'>Are you absolutely sure?</DialogTitle>
+                <DialogTitle className='flex justify-center mb-4'>Are you absolutely sure?</DialogTitle>
                 <DialogDescription>
                   <div className="relative">
-                    <pre className="p-4 bg-gray-100 rounded">
-                      <code>
-                        This action cannot be undone.
+                    <pre className="p-4 bg-black text-white rounded overflow-x-auto">
+                      <code className="whitespace-pre-wrap">
+                        {sampleData2}
                       </code>
                     </pre>
                     <button
-                      onClick={() => handleCopy(
-                        "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-                        setIsCopied2
-                      )}
-                      className="absolute top-2 right-2 p-1 text-sm bg-blue-500 text-white rounded"
+                      onClick={() => copyToClipboard(sampleData2, setIsCopied2)}
+                      className="absolute top-2 right-2 p-1 text-sm rounded"
                     >
-                      {isCopied2 ? 'Copied!' : 'Copy'}
+                      {isCopied2 ? <CopyCheckIcon className="h-4 w-4 text-green-500" /> : <CopyIcon className="h-4 w-4 text-white" />}
                     </button>
                   </div>
                 </DialogDescription>
