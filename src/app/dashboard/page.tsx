@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/navbar";
+import NewSimulation from "@/components/newSimulation";
 import { useNetwork, useExplorer } from "@starknet-react/core";
 
 const Test = () => {
@@ -9,9 +10,12 @@ const Test = () => {
   return (
     <>
       <Navbar />
-      <main className="flex flex-col items-center justify-center min-h-screen gap-12">
-        <h1 className="text-4xl font-bold text-primary">Simulator Dashboard</h1>
-        <span>Chain : {chain.name}</span>
+      <main className="px-20">
+        <div className="">
+          <NewSimulation />
+        </div>
+        {/* <h1 className="text-4xl font-bold text-primary">Simulator Dashboard</h1>
+        <span>Chain : {chain.name}</span> */}
       </main>
     </>
   );
