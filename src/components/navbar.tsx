@@ -14,7 +14,6 @@ const Navbar = () => {
           />
           <p className='font-bold text-xl'>Stark Simulator AI</p>
         </div>
-
         <WalletBar />
       </div>
     </div>

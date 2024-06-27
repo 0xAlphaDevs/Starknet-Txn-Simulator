@@ -1,4 +1,5 @@
 "use client";
+
 import { useAccount, useConnect, useDisconnect } from "@starknet-react/core";
 import { useEffect, useMemo, useState } from "react";
 import { WalletButton } from "./ui/WalletButton";
@@ -37,8 +38,8 @@ function WalletConnected() {
   return (
     <div className="flex gap-4 items-center">
       <div>
-        <p className="font-light">Address:</p>
-        <p className="font-thin text-sm flex items-center">
+        <p className="font-normal text-sm">Address:</p>
+        <p className="font-light text-sm flex items-center">
           {shortenedAddress}
           <button onClick={copyToClipboard} className="ml-2">
             {copied ? <CopyCheckIcon className="h-4 w-4 font-light text-green-500" /> : <CopyIcon className="h-4 w-4 font-light" />}
