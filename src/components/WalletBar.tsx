@@ -1,13 +1,17 @@
 "use client";
 import { useAccount, useConnect, useDisconnect } from "@starknet-react/core";
-import { useEffect, useMemo } from "react";
-import { Button } from "./ui/Button";
+import { useEffect, useMemo, useState } from "react";
+import { WalletButton } from "./ui/WalletButton";
 import { useRouter } from "next/navigation";
+import { CopyCheckIcon, CopyIcon } from "lucide-react";
+
 
 function WalletConnected() {
   const router = useRouter();
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
+  const [copied, setCopied] = useState(false);
+
 
   const shortenedAddress = useMemo(() => {
     if (!address) return "";
@@ -19,17 +23,39 @@ function WalletConnected() {
     router.push("/dashboard");
   }, [address]);
 
+  const copyToClipboard = () => {
+    if (address) {  // Ensure address is defined
+      navigator.clipboard.writeText(address).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset copied state after 2 seconds
+      });
+    } else {
+      console.error("Address is undefined.");
+    }
+  };
+
   return (
-    <div>
-      <span>Connected: {shortenedAddress}</span>
-      <button
-        onClick={() => {
-          disconnect();
-          router.push("/");
-        }}
-      >
-        Disconnect
-      </button>
+    <div className="flex gap-4 items-center">
+      <div>
+        <p className="font-light">Address:</p>
+        <p className="font-thin text-sm flex items-center">
+          {shortenedAddress}
+          <button onClick={copyToClipboard} className="ml-2">
+            {copied ? <CopyCheckIcon className="h-4 w-4 font-light text-green-500" /> : <CopyIcon className="h-4 w-4 font-light" />}
+          </button>
+        </p>
+      </div>
+      <div>
+        <WalletButton
+          onClick={() => {
+            disconnect();
+            router.push("/");
+          }}
+          className="gap-x-2 mr-2 bg-red-500 w-full"
+        >
+          Disconnect
+        </WalletButton>
+      </div>
     </div>
   );
 }
@@ -39,16 +65,16 @@ function ConnectWallet() {
 
   return (
     <div>
-      <span>Choose a wallet: </span>
       {connectors.map((connector) => {
         return (
-          <Button
+          <WalletButton
             key={connector.id}
             onClick={() => connect({ connector })}
-            className="gap-x-2 mr-2"
+            className="gap-x-2 mr-2 bg-blue-600 font-bold text-xl"
           >
-            {connector.id}
-          </Button>
+            {/* {connector.id} */}
+            Connect Wallet
+          </WalletButton>
         );
       })}
     </div>
