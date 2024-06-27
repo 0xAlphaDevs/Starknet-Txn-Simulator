@@ -1,9 +1,11 @@
 "use client";
 import { useAccount, useConnect, useDisconnect } from "@starknet-react/core";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Button } from "./ui/Button";
+import { useRouter } from "next/navigation";
 
 function WalletConnected() {
+  const router = useRouter();
   const { address } = useAccount();
   const { disconnect } = useDisconnect();
 
@@ -12,10 +14,22 @@ function WalletConnected() {
     return `${address.slice(0, 6)}...${address.slice(-4)}`;
   }, [address]);
 
+  useEffect(() => {
+    console.log("Connected to wallet:", address);
+    router.push("/dashboard");
+  }, [address]);
+
   return (
     <div>
       <span>Connected: {shortenedAddress}</span>
-      <button onClick={() => disconnect()}>Disconnect</button>
+      <button
+        onClick={() => {
+          disconnect();
+          router.push("/");
+        }}
+      >
+        Disconnect
+      </button>
     </div>
   );
 }
