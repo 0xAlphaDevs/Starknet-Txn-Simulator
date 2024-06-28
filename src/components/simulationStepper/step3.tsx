@@ -40,6 +40,8 @@ const Step3 = ({ formData, setFormData }: any) => {
         <Label htmlFor="param2">Parameter 2</Label>
         <Input id="param2" placeholder="Enter parameter 2" value={params.param2 || ''} onChange={handleInputChange} required />
       </div>
+      {/* Add more parameters as needed */}
+      <Button onClick={handleAddParam}>Add Parameters</Button>
     </div>
   )
 }

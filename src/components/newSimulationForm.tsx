@@ -56,6 +56,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           </CardDescription> */}
         </CardHeader>
         <CardContent className="h-72">
+
           {step === 1 ? (
             // Initial step - enter contract address and ABI
             <Step1 formData={formData} setFormData={setFormData} />
