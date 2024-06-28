@@ -26,7 +26,7 @@ const NewSimulation = () => {
   return (
     <div>
       <div className='flex justify-end'>
-        <Button onClick={() => setIsSimulationStarted(true)} className=''>+ New Simulation</Button>
+        <Button onClick={() => setIsSimulationStarted(true)} className='rounded-[10px] text-lg font-semibold'>+ New Simulation</Button>
       </div>
 
       {isSimulationStarted ? (
@@ -40,21 +40,21 @@ const NewSimulation = () => {
           <div className='flex gap-8'>
             <Dialog>
               <DialogTrigger asChild>
-                <Button> Sample 1</Button>
+                <Button className='rounded-[10px] text-md'> Sample 1</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className=''>
                 <DialogHeader>
                   <DialogTitle className='flex justify-center mb-4'>Sample Data 1</DialogTitle>
-                  <DialogDescription>
+                  <DialogDescription className=''>
                     <div className="relative">
-                      <pre className="p-4 bg-black text-white rounded overflow-x-auto">
+                      <pre className="p-4 bg-black text-white rounded">
                         <code className="whitespace-pre-wrap">
                           {sampleData1}
                         </code>
                       </pre>
                       <button
                         onClick={() => copyToClipboard(sampleData1, setIsCopied1)}
-                        className="absolute top-2 right-2 p-1 text-sm rounded"
+                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
                       >
                         {isCopied1 ? <CopyCheckIcon className="h-4 w-4 text-green-500" /> : <CopyIcon className="h-4 w-4 text-white" />}
                       </button>
@@ -66,14 +66,14 @@ const NewSimulation = () => {
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button> Sample 2</Button>
+                <Button className='rounded-[10px] text-md'> Sample 2</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle className='flex justify-center mb-4'>Are you absolutely sure?</DialogTitle>
+                  <DialogTitle className='flex justify-center mb-4'>Sample Data 2</DialogTitle>
                   <DialogDescription>
                     <div className="relative">
-                      <pre className="p-4 bg-black text-white rounded overflow-x-auto">
+                      <pre className="p-4 bg-black text-white rounded-[20px] ">
                         <code className="whitespace-pre-wrap">
                           {sampleData2}
                         </code>

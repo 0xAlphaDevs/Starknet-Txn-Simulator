@@ -4,7 +4,7 @@ import Navbar from "@/components/navbar";
 import NewSimulation from "@/components/newSimulation";
 import { useNetwork, useExplorer } from "@starknet-react/core";
 
-const Test = () => {
+const Dashboard = () => {
   const { chain } = useNetwork();
   const explorer = useExplorer();
   return (
@@ -21,4 +21,4 @@ const Test = () => {
   );
 };
 
-export default Test;
+export default Dashboard;

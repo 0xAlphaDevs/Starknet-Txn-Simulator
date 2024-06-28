@@ -1,21 +1,61 @@
-export const sampleData1 = JSON.stringify(
+export const sampleData1 = JSON.stringify([
   {
-    message:
-      "This action cannot be undone. This will permanently delete your account and remove your data from our servers.",
-    type: "warning",
-    action: "delete",
+    constant: true,
+    inputs: [],
+    name: "sampleData1",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
-  null,
-  2
-);
+  {
+    constant: true,
+    inputs: [],
+    name: "sampleData2",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+]);
 
-export const sampleData2 = JSON.stringify(
+export const sampleData2 = JSON.stringify([
   {
-    message:
-      "This will permanently delete your account and remove your data from our servers. Are you absolutely sure?",
-    type: "danger",
-    action: "confirm_delete",
+    constant: true,
+    inputs: [],
+    name: "sampleData1",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
   },
-  null,
-  2
-);
+  {
+    constant: true,
+    inputs: [],
+    name: "sampleData2",
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+]);
