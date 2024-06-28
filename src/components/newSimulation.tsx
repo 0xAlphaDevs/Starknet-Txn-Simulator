@@ -65,7 +65,7 @@ const NewSimulation = () => {
                   <DialogDescription className="">
                     <div className="relative">
                       <pre className="p-4 bg-black text-white rounded">
-                        <code className="whitespace-pre-wrap">
+                        <code className="whitespace-pre-wrap text-balance">
                           {sampleData1}
                         </code>
                       </pre>
@@ -99,7 +99,7 @@ const NewSimulation = () => {
                   <DialogDescription>
                     <div className="relative">
                       <pre className="p-4 bg-black text-white rounded-[20px] ">
-                        <code className="whitespace-pre-wrap">
+                        <code className="whitespace-pre-wrap text-balance">
                           {sampleData2}
                         </code>
                       </pre>
