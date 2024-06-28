@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dialog"
 import { CopyCheckIcon, CopyIcon } from 'lucide-react';
 import { sampleData1, sampleData2 } from '@/lib/sampleData';
+import NewSimulationForm from './newSimulationForm';
 
 const NewSimulation = () => {
   const [isCopied1, setIsCopied1] = useState(false);
@@ -30,9 +31,7 @@ const NewSimulation = () => {
       </div>
 
       {isSimulationStarted ? (
-        <div className='flex flex-col gap-8 items-center mt-40'>
-          <p className='text-lg font-medium'>New Simulation button is clicked</p>
-        </div>
+        <NewSimulationForm />
       ) : (
 
         <div className='flex flex-col gap-8 items-center mt-40'>
