@@ -20,22 +20,16 @@ const Step4 = ({ formData, setFormData }: any) => {
   };
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col">
       <div className='flex justify-center'>
         <Button className='rounded-[10px] font-semibold text-md' onClick={handleSimulateClick}>Simulate</Button>
       </div>
       {showSimulationOptions && (
-        <>
-          <div className="flex justify-center gap-40">
-            <TxnInvocationTrace />
-            <SummarizeTxn />
-          </div>
-          <div className='flex justify-center mx-80'>
-            <Button className='rounded-[10px] font-semibold text-md w-full'>Save Simulate</Button>
-          </div>
-        </>
+        <div className="flex justify-center mt-24 gap-40">
+          <TxnInvocationTrace />
+          <SummarizeTxn />
+        </div>
       )}
-
     </div>
   );
 };
