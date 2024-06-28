@@ -10,7 +10,7 @@ const Dashboard = () => {
   return (
     <>
       <Navbar />
-      <main className="px-20">
+      <main className="px-24">
         <div className="">
           <NewSimulation />
         </div>

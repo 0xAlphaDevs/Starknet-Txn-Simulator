@@ -55,39 +55,6 @@ const NewSimulation = () => {
             Starknet{" "}
           </p>
           <div className="flex gap-8">
-            {/* <Dialog>
-              <DialogTrigger asChild>
-                <Button className="rounded-[10px] text-md"> Sample 1</Button>
-              </DialogTrigger>
-              <DialogContent className="">
-                <DialogHeader>
-                  <DialogTitle className="flex justify-center mb-4">
-                    Sample Data 1
-                  </DialogTitle>
-                  <DialogDescription>
-                    <div className="relative">
-                      <pre className="p-4 bg-black text-white rounded">
-                        <code className="whitespace-pre-wrap text-balance">
-                          {sampleData1}
-                        </code>
-                      </pre>
-                      <button
-                        onClick={() =>
-                          copyToClipboard(sampleData1, setIsCopied1)
-                        }
-                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
-                      >
-                        {isCopied1 ? (
-                          <CopyCheckIcon className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <CopyIcon className="h-4 w-4 text-white" />
-                        )}
-                      </button>
-                    </div>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog> */}
             <Dialog>
               <DialogTrigger asChild>
                 <Button className="rounded-[10px] text-md">Sample 1</Button>
@@ -99,7 +66,7 @@ const NewSimulation = () => {
                   </DialogTitle>
                   <DialogDescription className="h-full">
                     <div className="relative h-full">
-                      <SyntaxHighlighter language="javascript" style={dark}>
+                      <SyntaxHighlighter language="javascript" style={dark} customStyle={{ background: 'black', borderRadius: '15px', padding: '10px' }}>
                         {sampleData1}
                       </SyntaxHighlighter>
                       <button
@@ -131,7 +98,8 @@ const NewSimulation = () => {
                   </DialogTitle>
                   <DialogDescription className="h-full">
                     <div className="relative h-full">
-                      <SyntaxHighlighter language="javascript" style={dark}>
+                      <SyntaxHighlighter language="javascript" style={dark} customStyle={{ background: 'black', borderRadius: '15px', padding: '10px' }}
+                      >
                         {sampleData2}
                       </SyntaxHighlighter>
                       <button
