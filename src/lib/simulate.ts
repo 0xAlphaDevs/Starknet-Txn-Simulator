@@ -10,6 +10,7 @@ import {
   SimulateTransactionResponse,
 } from "starknet";
 import { decodeTrace } from "./decoder";
+import test from "node:test";
 
 export type Function = {
   read: {
@@ -27,6 +28,8 @@ export type Function = {
 };
 
 export const simulateTransaction = async (
+  walletAddress: string,
+  address: string,
   functionName: string,
   calldata: string[]
 ) => {
@@ -40,10 +43,8 @@ export const simulateTransaction = async (
       nodeUrl: "https://free-rpc.nethermind.io/sepolia-juno/",
     });
 
-    const walletAddress =
-      "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9";
-    const privateKey = "REPLACE_ME";
-    const contractAddress = "REPLACE_ME";
+    const privateKey = ""; // not needed for simulation
+    const contractAddress = address;
     const account = new Account(provider, walletAddress, privateKey);
 
     const nonce = await provider.getNonceForAddress(walletAddress!);
@@ -53,28 +54,31 @@ export const simulateTransaction = async (
     const cairoVersion = "1";
 
     const entrypoint = selector.getSelectorFromName(functionName);
+    console.log("Entrypoint:", entrypoint);
 
-    const call: Call = {
-      contractAddress,
-      entrypoint,
-      calldata: {
-        // REPLACE_ME
-        recipient:
-          "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9",
-        amount: "0x0",
-      },
-    };
+    // const call: Call = {
+    //   contractAddress,
+    //   entrypoint,
+    //   calldata: {
+    //     // REPLACE_ME
+    //     recipient:
+    //       "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9",
+    //     amount: "0x0",
+    //   },
+    // };
 
-    const signature = await signTransaction(
-      account,
-      walletAddress!,
-      nonce,
-      maxFee,
-      version,
-      chainId!,
-      cairoVersion,
-      call
-    );
+    // const signature = await signTransaction(
+    //   account,
+    //   walletAddress!,
+    //   nonce,
+    //   maxFee,
+    //   version,
+    //   chainId!,
+    //   cairoVersion,
+    //   call
+    // );
+
+    const signature: ArraySignatureType = [];
 
     calldata = [
       "0x1",
@@ -178,3 +182,15 @@ const signTransaction = async (
   const formatedSignature = stark.formatSignature(signature);
   return formatedSignature;
 };
+
+export const testFunction = (walletAddress: string) => {
+  console.log("Hello from simulate.ts!");
+  simulateTransaction(
+    walletAddress,
+    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8",
+    "name",
+    ["0x"]
+  );
+};
+
+// simulateTransaction();
