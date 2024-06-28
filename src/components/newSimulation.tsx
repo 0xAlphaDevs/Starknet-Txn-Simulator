@@ -53,7 +53,7 @@ const NewSimulation = () => {
             Starknet{" "}
           </p>
           <div className="flex gap-8">
-            <Dialog>
+            {/* <Dialog>
               <DialogTrigger asChild>
                 <Button className="rounded-[10px] text-md"> Sample 1</Button>
               </DialogTrigger>
@@ -62,7 +62,7 @@ const NewSimulation = () => {
                   <DialogTitle className="flex justify-center mb-4">
                     Sample Data 1
                   </DialogTitle>
-                  <DialogDescription className="">
+                  <DialogDescription>
                     <div className="relative">
                       <pre className="p-4 bg-black text-white rounded">
                         <code className="whitespace-pre-wrap text-balance">
@@ -85,29 +85,58 @@ const NewSimulation = () => {
                   </DialogDescription>
                 </DialogHeader>
               </DialogContent>
+            </Dialog> */}
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button className="rounded-[10px] text-md">Sample 1</Button>
+              </DialogTrigger>
+              <DialogContent className="h-[80vh] w-[60vw] overflow-hidden">
+                <DialogHeader>
+                  <DialogTitle className="flex justify-center mb-4">
+                    Sample Data 1
+                  </DialogTitle>
+                  <DialogDescription className="h-full">
+                    <div className="relative h-full">
+                      <pre className="p-4 bg-black text-white rounded h-full max-h-full overflow-y-auto">
+                        <code className="whitespace-pre-wrap break-words text-balance">
+                          {sampleData1}
+                        </code>
+                      </pre>
+                      <button
+                        onClick={() => copyToClipboard(sampleData1, setIsCopied1)}
+                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
+                      >
+                        {isCopied1 ? (
+                          <CopyCheckIcon className="h-4 w-4 text-green-500" />
+                        ) : (
+                          <CopyIcon className="h-4 w-4 text-white" />
+                        )}
+                      </button>
+                    </div>
+                  </DialogDescription>
+                </DialogHeader>
+              </DialogContent>
             </Dialog>
 
             <Dialog>
               <DialogTrigger asChild>
-                <Button className="rounded-[10px] text-md"> Sample 2</Button>
+                <Button className="rounded-[10px] text-md">Sample 2</Button>
               </DialogTrigger>
-              <DialogContent>
+              <DialogContent className="h-[80vh] w-[60vw] overflow-hidden">
                 <DialogHeader>
                   <DialogTitle className="flex justify-center mb-4">
                     Sample Data 2
                   </DialogTitle>
-                  <DialogDescription>
-                    <div className="relative">
-                      <pre className="p-4 bg-black text-white rounded-[20px] ">
-                        <code className="whitespace-pre-wrap text-balance">
+                  <DialogDescription className="h-full">
+                    <div className="relative h-full">
+                      <pre className="p-4 bg-black text-white rounded h-full max-h-full overflow-y-auto">
+                        <code className="whitespace-pre-wrap break-words text-balance">
                           {sampleData2}
                         </code>
                       </pre>
                       <button
-                        onClick={() =>
-                          copyToClipboard(sampleData2, setIsCopied2)
-                        }
-                        className="absolute top-2 right-2 p-1 text-sm rounded"
+                        onClick={() => copyToClipboard(sampleData2, setIsCopied2)}
+                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
                       >
                         {isCopied2 ? (
                           <CopyCheckIcon className="h-4 w-4 text-green-500" />
@@ -120,6 +149,7 @@ const NewSimulation = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+
           </div>
         </div>
       )}

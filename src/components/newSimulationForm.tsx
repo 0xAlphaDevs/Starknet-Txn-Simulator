@@ -47,7 +47,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   };
 
   return (
-    <div className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-96"}`}>
+    <div className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-64"}`}>
       <div className="">
         {step === 1 ? (
           <Step1 formData={formData} setFormData={setFormData} />
@@ -70,35 +70,32 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
         )
         }
       </div>
-      <div className="flex justify-between">
+      <div className="">
         {step === 1 ? (
-          <>
+          <div className="flex justify-between">
             <Button variant="outline" onClick={() => setSimulationStarted(false)} className="rounded-[10px] text-md">
               Cancel
             </Button>
             <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
-          </>
+          </div>
         ) : step === 2 ? (
-          <>
+          <div className="flex justify-between">
             <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
               Previous
             </Button>
             <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
-          </>
+          </div>
         ) : step === 3 ? (
-          <>
+          <div className="flex justify-between">
             <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
               Previous
             </Button>
             <Button onClick={handleNextStep} className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400">Simulate Transaction</Button>
-          </>
+          </div>
         ) : step === 4 ? (
-          <>
-            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
-              Previous
-            </Button>
+          <div className="flex justify-center">
             <Button onClick={handleSubmit} className="rounded-[10px] text-md bg-green-500 hover:bg-green-400">Save Simulation</Button>
-          </>
+          </div>
         ) : (
           <div className="flex flex-col gap-4">
             <p>other case </p>
