@@ -71,10 +71,10 @@ function ConnectWallet() {
           <WalletButton
             key={connector.id}
             onClick={() => connect({ connector })}
-            className="gap-x-2 mr-2 bg-blue-600 font-bold text-xl"
+            className="mr-2 px-2 bg-blue-600 font-bold text-2xl rounded-[15px]"
           >
             {/* {connector.id} */}
-            Connect Wallet
+            <p className="px-2"> Connect Wallet</p>
           </WalletButton>
         );
       })}
