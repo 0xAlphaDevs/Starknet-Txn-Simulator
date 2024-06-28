@@ -9,71 +9,100 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import Step1 from "./simulationStepper/step1";
+import Step2 from "./simulationStepper/step2";
+import Step3 from "./simulationStepper/step3";
+import Step4 from "./simulationStepper/step4";
+
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
-  const [formData, setFormData] = React.useState<any>({});
+
   const [selectedFunction, setSelectedFunction] = React.useState<any>(null);
   const [step, setStep] = React.useState(1);
+  const [formData, setFormData] = React.useState({
+    contractAddress: "",
+    network: "mainnet",
+    abi: "",
+    selectedFunction: "",
+    functionParams: {},
+  });
+
+
+  const handleNextStep = () => {
+    if (step < 4) {
+      setStep(step + 1);
+    }
+  };
+
+  const handlePreviousStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData);
+    setSimulationStarted(false);
+  };
 
   return (
-    <div className="flex flex-col gap-8 items-center mt-24">
-      <Card className="w-[40%]">
+    <div className="flex flex-col gap-8 items-center mt-12">
+      <Card className={step === 4 ? "w-[80%]" : "w-[40%]"}>
         <CardHeader>
-          <CardTitle>New Simulation</CardTitle>
-          <CardDescription>
-            Deploy your new project in one-click.
-          </CardDescription>
+          <CardTitle>Simulation Details</CardTitle>
+          {/* <CardDescription>
+            Enter details below to get started with a simulation.
+          </CardDescription> */}
         </CardHeader>
-        <CardContent>
+        <CardContent className="h-72">
           {step === 1 ? (
             // Initial step - enter contract address and ABI
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Name</Label>
-                  <Input id="name" placeholder="Name of your project" />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="framework">Framework</Label>
-                  <Select>
-                    <SelectTrigger id="framework">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="next">Next.js</SelectItem>
-                      <SelectItem value="sveltekit">SvelteKit</SelectItem>
-                      <SelectItem value="astro">Astro</SelectItem>
-                      <SelectItem value="nuxt">Nuxt.js</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </form>
+            <Step1 formData={formData} setFormData={setFormData} />
           ) : step === 2 ? (
             // Select function to call
             <div className="flex flex-col gap-4">
-              <p>Select function to call...</p>
+              <Step2 formData={formData} setFormData={setFormData} />
+            </div>
+          ) : step === 3 ? (
+            // display the function name from step2 in the header of step 3 and make field to enter parameters
+            <div className="flex flex-col gap-4">
+              <Step3 formData={formData} setFormData={setFormData} />
+            </div>
+          ) : step === 4 ? (
+            <div className="flex flex-col gap-4">
+              <Step4 formData={formData} setformData={setFormData} />
             </div>
           ) : (
             <div className="flex flex-col gap-4">
               <p>other case </p>
             </div>
-          )}
+          )
+          }
         </CardContent>
         <CardFooter className="flex justify-between">
-          <Button variant="outline" onClick={() => setSimulationStarted(false)}>
-            Cancel
-          </Button>
-          <Button onClick={() => setStep(2)}>Deploy</Button>
+          {step === 1 ? (
+            <>
+              <Button variant="outline" onClick={() => setSimulationStarted(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleNextStep}>Next</Button>
+            </>
+          ) : step === 4 ? (
+            <>
+              <Button variant="outline" onClick={handlePreviousStep}>
+                Previous
+              </Button>
+              <Button onClick={handleSubmit}>Submit</Button>
+            </>
+          ) : (
+            <>
+              <Button variant="outline" onClick={handlePreviousStep}>
+                Previous
+              </Button>
+              <Button onClick={handleNextStep}>Next</Button>
+            </>
+          )}
         </CardFooter>
       </Card>
     </div>
