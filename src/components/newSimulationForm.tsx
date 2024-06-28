@@ -43,69 +43,69 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    setSimulationStarted(false);
+    setSimulationStarted(false)
   };
 
   return (
-    <div className="flex flex-col gap-8 items-center mt-12">
-      <Card className={step === 4 ? "w-[80%]" : "w-[40%]"}>
-        <CardHeader>
-          <CardTitle>Simulation Details</CardTitle>
-          {/* <CardDescription>
-            Enter details below to get started with a simulation.
-          </CardDescription> */}
-        </CardHeader>
-        <CardContent className="h-72">
-
-          {step === 1 ? (
-            // Initial step - enter contract address and ABI
-            <Step1 formData={formData} setFormData={setFormData} />
-          ) : step === 2 ? (
-            // Select function to call
-            <div className="flex flex-col gap-4">
-              <Step2 formData={formData} setFormData={setFormData} />
-            </div>
-          ) : step === 3 ? (
-            // display the function name from step2 in the header of step 3 and make field to enter parameters
-            <div className="flex flex-col gap-4">
-              <Step3 formData={formData} setFormData={setFormData} />
-            </div>
-          ) : step === 4 ? (
-            <div className="flex flex-col gap-4">
-              <Step4 formData={formData} setformData={setFormData} />
-            </div>
-          ) : (
-            <div className="flex flex-col gap-4">
-              <p>other case </p>
-            </div>
-          )
-          }
-        </CardContent>
-        <CardFooter className="flex justify-between">
-          {step === 1 ? (
-            <>
-              <Button variant="outline" onClick={() => setSimulationStarted(false)}>
-                Cancel
-              </Button>
-              <Button onClick={handleNextStep}>Next</Button>
-            </>
-          ) : step === 4 ? (
-            <>
-              <Button variant="outline" onClick={handlePreviousStep}>
-                Previous
-              </Button>
-              <Button onClick={handleSubmit}>Submit</Button>
-            </>
-          ) : (
-            <>
-              <Button variant="outline" onClick={handlePreviousStep}>
-                Previous
-              </Button>
-              <Button onClick={handleNextStep}>Next</Button>
-            </>
-          )}
-        </CardFooter>
-      </Card>
+    <div className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-96"}`}>
+      <div className="">
+        {step === 1 ? (
+          <Step1 formData={formData} setFormData={setFormData} />
+        ) : step === 2 ? (
+          <div className="flex flex-col gap-4">
+            <Step2 formData={formData} setFormData={setFormData} />
+          </div>
+        ) : step === 3 ? (
+          <div className="flex flex-col gap-4">
+            <Step3 formData={formData} setFormData={setFormData} />
+          </div>
+        ) : step === 4 ? (
+          <div className="flex flex-col gap-4">
+            <Step4 formData={formData} setformData={setFormData} />
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <p>other case </p>
+          </div>
+        )
+        }
+      </div>
+      <div className="flex justify-between">
+        {step === 1 ? (
+          <>
+            <Button variant="outline" onClick={() => setSimulationStarted(false)} className="rounded-[10px] text-md">
+              Cancel
+            </Button>
+            <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
+          </>
+        ) : step === 2 ? (
+          <>
+            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
+              Previous
+            </Button>
+            <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
+          </>
+        ) : step === 3 ? (
+          <>
+            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
+              Previous
+            </Button>
+            <Button onClick={handleNextStep} className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400">Simulate Transaction</Button>
+          </>
+        ) : step === 4 ? (
+          <>
+            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
+              Previous
+            </Button>
+            <Button onClick={handleSubmit} className="rounded-[10px] text-md bg-green-500 hover:bg-green-400">Save Simulation</Button>
+          </>
+        ) : (
+          <div className="flex flex-col gap-4">
+            <p>other case </p>
+          </div>
+        )
+        }
+      </div>
     </div>
   );
 };

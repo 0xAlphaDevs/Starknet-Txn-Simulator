@@ -1,17 +1,17 @@
 "use client"
 
 import React, { useState } from 'react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from '../ui/button';
-import TxnInvocationTrace from './step4/txnInvocationTrace';
-import SummarizeTxn from './step4/summarizeTxn';
 
 const Step4 = ({ formData, setFormData }: any) => {
-
-  const [showSimulationOptions, setShowSimulationOptions] = useState(false);
-
-  const handleSimulateClick = () => {
-    setShowSimulationOptions(true);
-  };
 
   const handleFunctionChange = (value: string) => {
     setFormData((prevFormData: any) => ({
@@ -20,16 +20,32 @@ const Step4 = ({ formData, setFormData }: any) => {
   };
 
   return (
-    <div className="flex flex-col">
-      <div className='flex justify-center'>
-        <Button className='rounded-[10px] font-semibold text-md' onClick={handleSimulateClick}>Simulate</Button>
-      </div>
-      {showSimulationOptions && (
-        <div className="flex justify-center mt-24 gap-40">
-          <TxnInvocationTrace />
-          <SummarizeTxn />
-        </div>
-      )}
+    <div className="flex gap-12">
+      <Card className='w-full h-96'>
+        <CardHeader>
+          <CardTitle>Invocation Trace</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+      <Card className='w-full h-96'>
+        <CardHeader>
+          <CardTitle>Summarize Transaction</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+
     </div>
   );
 };
