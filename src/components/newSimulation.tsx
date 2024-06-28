@@ -11,6 +11,8 @@ import {
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
 import { sampleData1, sampleData2 } from "@/lib/sampleData";
 import NewSimulationForm from "./newSimulationForm";
+import SyntaxHighlighter from "react-syntax-highlighter";
+import { dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const NewSimulation = () => {
   const [isCopied1, setIsCopied1] = useState(false);
@@ -97,13 +99,13 @@ const NewSimulation = () => {
                   </DialogTitle>
                   <DialogDescription className="h-full">
                     <div className="relative h-full">
-                      <pre className="p-4 bg-black text-white rounded h-full max-h-full overflow-y-auto">
-                        <code className="whitespace-pre-wrap break-words text-balance">
-                          {sampleData1}
-                        </code>
-                      </pre>
+                      <SyntaxHighlighter language="javascript" style={dark}>
+                        {sampleData1}
+                      </SyntaxHighlighter>
                       <button
-                        onClick={() => copyToClipboard(sampleData1, setIsCopied1)}
+                        onClick={() =>
+                          copyToClipboard(sampleData1, setIsCopied1)
+                        }
                         className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
                       >
                         {isCopied1 ? (
@@ -129,13 +131,13 @@ const NewSimulation = () => {
                   </DialogTitle>
                   <DialogDescription className="h-full">
                     <div className="relative h-full">
-                      <pre className="p-4 bg-black text-white rounded h-full max-h-full overflow-y-auto">
-                        <code className="whitespace-pre-wrap break-words text-balance">
-                          {sampleData2}
-                        </code>
-                      </pre>
+                      <SyntaxHighlighter language="javascript" style={dark}>
+                        {sampleData2}
+                      </SyntaxHighlighter>
                       <button
-                        onClick={() => copyToClipboard(sampleData2, setIsCopied2)}
+                        onClick={() =>
+                          copyToClipboard(sampleData2, setIsCopied2)
+                        }
                         className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
                       >
                         {isCopied2 ? (
@@ -149,7 +151,6 @@ const NewSimulation = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
-
           </div>
         </div>
       )}

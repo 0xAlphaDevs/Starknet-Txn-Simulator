@@ -10,7 +10,6 @@ import {
   SimulateTransactionResponse,
 } from "starknet";
 import { decodeTrace } from "./decoder";
-import test from "node:test";
 
 export type Function = {
   read: {
@@ -33,22 +32,23 @@ export const simulateTransaction = async (
   functionName: string,
   calldata: string[]
 ) => {
-  const simulationParameters = {
-    functionName,
-    calldata,
-  };
+  // const simulationParameters = {
+  //   functionName,
+  //   calldata,
+  // };
 
   try {
     const provider = new RpcProvider({
-      nodeUrl: "https://free-rpc.nethermind.io/sepolia-juno/",
+      nodeUrl: "https://free-rpc.nethermind.io/mainnet-juno/",
     });
 
     const privateKey = ""; // not needed for simulation
     const contractAddress = address;
-    const account = new Account(provider, walletAddress, privateKey);
+    // const account = new Account(provider, walletAddress, privateKey);
 
-    const nonce = await provider.getNonceForAddress(walletAddress!);
-    const chainId = await account?.getChainId();
+    const nonce = await provider.getNonceForAddress(walletAddress);
+
+    // const chainId = await account?.getChainId();
     const maxFee = "0x0";
     const version = 1;
     const cairoVersion = "1";
@@ -80,23 +80,18 @@ export const simulateTransaction = async (
 
     const signature: ArraySignatureType = [];
 
-    calldata = [
-      "0x1",
-      contractAddress,
-      entrypoint,
-      "0x3",
-      "0x0000000000000000000000000000000000000000000000000000000000000000",
-      "0x0",
-      "0x0",
-    ];
+    // Figure out calldata : TO DO
+    calldata = ["0x1", contractAddress, entrypoint, "0x0"];
 
     const simulation = await simulateTransactions(
-      walletAddress!,
+      walletAddress,
       calldata,
       signature,
       nonce
     );
-    console.log(simulation);
+
+    console.log("Simulation Response:", simulation);
+    // LATER: decode trace
     if (simulation) {
       const trace = await decodeTrace(simulation[0].transaction_trace);
       console.log(trace);
@@ -112,13 +107,14 @@ const simulateTransactions = async (
   signature: ArraySignatureType,
   nonce: string
 ) => {
-  const url = "https://free-rpc.nethermind.io/sepolia-juno/";
+  const url = "https://free-rpc.nethermind.io/mainnet-juno/";
   // EXAMPLE PAYLOAD
   const payload = {
     jsonrpc: "2.0",
     method: "starknet_simulateTransactions",
     params: {
       block_id: "latest",
+      sender_address,
       transactions: [
         {
           type: "INVOKE",
@@ -148,9 +144,8 @@ const simulateTransactions = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const data = await response.json();
-    console.log(data);
-    return data;
+    const { result } = await response.json();
+    return result as SimulateTransactionResponse;
   } catch (error) {
     console.error("Error fetching data: ", error);
   }
@@ -184,12 +179,12 @@ const signTransaction = async (
 };
 
 export const testFunction = (walletAddress: string) => {
-  console.log("Hello from simulate.ts!");
+  console.log("Hello from simulate.ts!", walletAddress);
   simulateTransaction(
     walletAddress,
-    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8",
+    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
     "name",
-    ["0x"]
+    []
   );
 };
 
