@@ -23,6 +23,7 @@ const Test = () => {
     console.log(functions);
     setContractFunctions(functions);
   }
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-12">
       {/* <WalletBar /> */}

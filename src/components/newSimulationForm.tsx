@@ -1,36 +1,46 @@
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import Step1 from "./simulationStepper/step1";
 import Step2 from "./simulationStepper/step2";
 import Step3 from "./simulationStepper/step3";
 import Step4 from "./simulationStepper/step4";
+import { DecodedSelector } from "@/lib/decoder";
+import { getFunctionsForContract } from "@/lib/simulate";
 
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
-
-  const [selectedFunction, setSelectedFunction] = React.useState<any>(null);
+  const [contractFunctions, setContractFunctions] = React.useState<DecodedSelector>({});
   const [step, setStep] = React.useState(1);
+  const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
     contractAddress: "",
     network: "mainnet",
-    abi: "",
+    // abi: "",
     selectedFunction: "",
     functionParams: {},
   });
 
 
-  const handleNextStep = () => {
+
+  const handleNextStep = async () => {
     if (step < 4) {
       setStep(step + 1);
+      if (step == 1) {
+        setLoading(true);
+        console.log("Calling after step 1");
+        const functions = await getFunctionsForContract(formData.contractAddress);
+        console.log(functions);
+        setContractFunctions(functions);
+        setLoading(false);
+      }
+      else if (step == 2) {
+        console.log("Calling after step 2");
+
+      }
+      else if (step == 3) {
+        console.log("Calling after step 3");
+      }
     }
   };
 
@@ -53,7 +63,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           <Step1 formData={formData} setFormData={setFormData} />
         ) : step === 2 ? (
           <div className="flex flex-col gap-4">
-            <Step2 formData={formData} setFormData={setFormData} />
+            <Step2 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} loading={loading} />
           </div>
         ) : step === 3 ? (
           <div className="flex flex-col gap-4">

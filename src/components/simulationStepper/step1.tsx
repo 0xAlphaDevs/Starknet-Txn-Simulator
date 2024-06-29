@@ -60,7 +60,7 @@ const Step1 = ({ formData, setFormData }: any) => {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex flex-col space-y-1.5">
+          {/* <div className="flex flex-col space-y-1.5">
             <Label htmlFor="abi">ABI</Label>
             <Textarea
               id='abi'
@@ -69,7 +69,7 @@ const Step1 = ({ formData, setFormData }: any) => {
               onChange={handleInputChange}
               required
             />
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>
