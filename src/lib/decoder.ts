@@ -5,7 +5,7 @@ type CallPuts = {
   type: string;
 }[];
 
-type DecodedSelector = {
+export type DecodedSelector = {
   [key: string]: {
     name: string;
     inputs: CallPuts;
@@ -32,7 +32,7 @@ const StarknetAbiTypes = [
 ];
 
 export const NETHERMIND_RPC_URL =
-  "https://free-rpc.nethermind.io/sepolia-juno/";
+  "https://free-rpc.nethermind.io/mainnet-juno/";
 
 export const decodeTrace = async (trace: any, rpcUrl?: string) => {
   const {
@@ -58,20 +58,27 @@ const decodeInvocation = async (
     call_type: callType,
     entry_point_selector: entryPointSelector,
     calls = [],
+    result = [],
   } = invocation;
+
+  // console.log("calls inside account contract:", calls);
 
   const provider = new RpcProvider({
     nodeUrl: NETHERMIND_RPC_URL,
   });
   const abi = await getAbi(contractAddress, provider);
+
   const selectors = getSelectors(abi);
+  console.log("Selectors:", selectors);
+
   const functionName = getFunctionName(entryPointSelector, selectors);
 
   const { inputs, outputs } = decodeCallData(
     abi,
     calldata,
     entryPointSelector,
-    selectors
+    selectors,
+    result
   );
 
   const functionInvocationTrace = {
@@ -90,13 +97,14 @@ const decodeCallData = (
   abi: Abi,
   calldata: string[],
   entryPointSelector: string,
-  selectors: DecodedSelector
+  selectors: DecodedSelector,
+  result: any
 ): { inputs: any; outputs: any } => {
   // Directly access the inputs and outputs using the entryPointSelector, avoiding redundant lookups
   const { inputs, outputs } = selectors[entryPointSelector];
   return {
     inputs: decodePuts(abi, calldata, inputs).decoded,
-    outputs: decodePuts(abi, calldata, outputs).decoded,
+    outputs: decodePuts(abi, result, outputs).decoded,
   };
 };
 
@@ -115,11 +123,36 @@ const decodePuts = (abi: Abi, call: string[], puts: CallPuts) => {
 
     // TODO: Handle bool, byteArray, and complex.
     if (elementType.includes("integer") || elementType === "Uint256") {
+      // 🟡
+      console.log("Integer detected:");
+      console.log("Start index:", startIndex);
+
       stopIndex += 2; // For integers and Uint256
+      console.log("Stop index:", stopIndex);
+
+      call = call.slice(startIndex, stopIndex);
+
+      console.log("Call:", call);
+
+      // parse the integer and then push it to the decodedCall array
+      let values = [];
+      for (const c of call) {
+        if (c === "0x0" && values.length !== 0) {
+          continue;
+        }
+        values.push(parseInt(c, 16));
+      }
+
+      decodedCall.push({
+        name: put.name,
+        type: put.type,
+        value: values,
+      });
     } else if (!StarknetAbiTypes.includes(elementType)) {
       const structTypes = abi.filter(
         (item) => item.type === "struct" && item.name === elementType
       );
+
       if (structTypes.length > 0) {
         const structType = structTypes[0];
         const structInputs = structType.members.map(
@@ -169,6 +202,9 @@ const decodePuts = (abi: Abi, call: string[], puts: CallPuts) => {
     startIndex = stopIndex; // Update startIndex for the next iteration
   }
 
+  // console.log("Inputs:", puts);
+  // console.log("Outputs:", { decoded: decodedCall, consumed: startIndex });
+
   return {
     decoded: decodedCall,
     consumed: startIndex, // Return the total number of elements consumed to decode this call
@@ -201,7 +237,7 @@ const isProxy = (abi: Abi): string => {
   );
 };
 
-const getSelectors = (abi: Abi): DecodedSelector => {
+export const getSelectors = (abi: Abi): DecodedSelector => {
   return abi.reduce((acc, f) => {
     if (
       f.type === "function" ||

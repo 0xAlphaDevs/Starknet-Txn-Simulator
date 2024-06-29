@@ -9,7 +9,12 @@ import {
   stark,
   SimulateTransactionResponse,
 } from "starknet";
-import { decodeTrace } from "./decoder";
+import {
+  decodeTrace,
+  getSelectors,
+  getAbi,
+  NETHERMIND_RPC_URL,
+} from "./decoder";
 
 export type Function = {
   read: {
@@ -28,9 +33,9 @@ export type Function = {
 
 export const simulateTransaction = async (
   walletAddress: string,
-  address: string,
+  contractAddress: string,
   functionName: string,
-  calldata: string[]
+  functionInputs: string[]
 ) => {
   // const simulationParameters = {
   //   functionName,
@@ -43,17 +48,17 @@ export const simulateTransaction = async (
     });
 
     const privateKey = ""; // not needed for simulation
-    const contractAddress = address;
+    // const contractAddress = address;
     // const account = new Account(provider, walletAddress, privateKey);
 
-    const nonce = await provider.getNonceForAddress(walletAddress);
+    const nonce = await provider.getNonceForAddress(walletAddress); // no of transactions sent by the account
 
     // const chainId = await account?.getChainId();
-    const maxFee = "0x0";
-    const version = 1;
-    const cairoVersion = "1";
+    // const maxFee = "0x0";
+    // const version = 1;
+    // const cairoVersion = "1";
 
-    const entrypoint = selector.getSelectorFromName(functionName);
+    const entrypoint = selector.getSelectorFromName(functionName); // get the selector for the function
     console.log("Entrypoint:", entrypoint);
 
     // const call: Call = {
@@ -81,7 +86,9 @@ export const simulateTransaction = async (
     const signature: ArraySignatureType = [];
 
     // Figure out calldata : TO DO
-    calldata = ["0x1", contractAddress, entrypoint, "0x0"];
+    const calldata = ["0x1", contractAddress, entrypoint, ...functionInputs];
+
+    console.log("Calldata:", calldata);
 
     const simulation = await simulateTransactions(
       walletAddress,
@@ -94,7 +101,7 @@ export const simulateTransaction = async (
     // LATER: decode trace
     if (simulation) {
       const trace = await decodeTrace(simulation[0].transaction_trace);
-      console.log(trace);
+      console.log("Final output after decoder :", trace);
     }
   } catch (err) {
     console.error("Error fetching data: ", err);
@@ -114,7 +121,6 @@ const simulateTransactions = async (
     method: "starknet_simulateTransactions",
     params: {
       block_id: "latest",
-      sender_address,
       transactions: [
         {
           type: "INVOKE",
@@ -144,48 +150,125 @@ const simulateTransactions = async (
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    const { result } = await response.json();
-    return result as SimulateTransactionResponse;
+    const res = await response.json();
+
+    return res.result as SimulateTransactionResponse;
   } catch (error) {
     console.error("Error fetching data: ", error);
   }
 };
 
-const signTransaction = async (
-  account: Account,
-  walletAddress: string,
-  nonce: string,
-  maxFee: string,
-  version: any,
-  chainId: constants.StarknetChainId,
-  cairoVersion: CairoVersion,
-  call: Call
-): Promise<ArraySignatureType> => {
-  const signerDetails = {
-    walletAddress,
-    nonce,
-    maxFee,
-    version,
-    chainId,
-    cairoVersion,
-    skipValidate: true,
-  };
+// const signTransaction = async (
+//   account: Account,
+//   walletAddress: string,
+//   nonce: string,
+//   maxFee: string,
+//   version: any,
+//   chainId: constants.StarknetChainId,
+//   cairoVersion: CairoVersion,
+//   call: Call
+// ): Promise<ArraySignatureType> => {
+//   const signerDetails = {
+//     walletAddress,
+//     nonce,
+//     maxFee,
+//     version,
+//     chainId,
+//     cairoVersion,
+//     skipValidate: true,
+//   };
 
-  const signer = account?.signer;
-  const signature = await signer?.signTransaction([call], signerDetails);
+//   const signer = account?.signer;
+//   const signature = await signer?.signTransaction([call], signerDetails);
 
-  const formatedSignature = stark.formatSignature(signature);
-  return formatedSignature;
-};
+//   const formatedSignature = stark.formatSignature(signature);
+//   return formatedSignature;
+// };
 
 export const testFunction = (walletAddress: string) => {
   console.log("Hello from simulate.ts!", walletAddress);
-  simulateTransaction(
-    walletAddress,
-    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
-    "name",
-    []
-  );
+
+  // READ totalSupply - 0 param
+  // simulateTransaction(
+  //   walletAddress,
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "totalSupply",
+  //   ["0x0"]
+  // );
+
+  // transfer usdc -- 2 params (recipient, amount) -- we pass 0x0 as the last param for the integer
+  // simulateTransaction(
+  //   walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "transfer",
+  //   [
+  //     "0x3",
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+  //     "0x9",
+  //     "0x0",
+  //   ]
+  // );
+
+  // transfer_from usdc -- 3 params (sender, recipient, amount) -- we pass 0x0 as the last param for the integer ❌
+  // simulateTransaction(
+  //   walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "transfer_from",
+  //   [
+  //     "0x4",
+  //     "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9", // sender
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d", // receiver
+  //     "0x3", // should be less than or equal to the allowance
+  //     "0x0",
+  //   ]
+  // );
+
+  // approve usdc -- 2 params
+  // simulateTransaction(
+  //   walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "approve",
+  //   [
+  //     "0x3",
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+  //     "0x9",
+  //     "0x0",
+  //   ]
+  // );
+
+  // allowance usdc -- 2 params (without integer so no need to add 0x0 in the calldata)
+  // simulateTransaction(
+  //   walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "allowance",
+  //   [
+  //     "0x2",
+  //     "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9",
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+  //   ]
+  // );
+
+  // balance_of - 1 param
+  // simulateTransaction(
+  //   walletAddress,
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "balance_of",
+  //   [
+  //     "0x1",
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+  //   ]
+  // );
+};
+
+export const getFunctionsForContract = async (contractAddress: string) => {
+  const provider = new RpcProvider({
+    nodeUrl: NETHERMIND_RPC_URL,
+  });
+  const abi = await getAbi(contractAddress, provider);
+
+  const selectors = getSelectors(abi);
+  // console.log("Selectors:", selectors);
+  return selectors;
 };
 
 // simulateTransaction();
