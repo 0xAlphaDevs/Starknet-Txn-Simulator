@@ -12,7 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const Step3 = ({ formData, setFormData }: any) => {
+const Step3 = ({ formData, setFormData, contractFunctions, selectedFunctionSelector }: any) => {
   const handleFunctionChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
     setFormData((prevFormData: any) => ({
@@ -20,6 +20,8 @@ const Step3 = ({ formData, setFormData }: any) => {
       [id]: value,
     }));
   };
+
+  console.log(contractFunctions[selectedFunctionSelector]);
 
   return (
     <Card className="">

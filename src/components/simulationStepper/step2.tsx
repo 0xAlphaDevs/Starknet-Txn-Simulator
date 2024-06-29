@@ -18,14 +18,34 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
+const Step2 = ({ formData, setFormData, contractFunctions, loading, setSelectedFunctionSelector }: any) => {
 
+  // const handleFunctionChange = (value: string) => {
+  //   let arr = value.split("#")
+  //   console.log(arr);
+
+
+  //   setFormData((prevFormData: any) => ({
+  //     ...prevFormData,
+  //     selectedFunction: arr[0],
+  //   }));
+  //   setSelectedFunctionSelector(arr[1])
+  //   console.log(formData);
+
+  // };
   const handleFunctionChange = (value: string) => {
+
+
+
     setFormData((prevFormData: any) => ({
       ...prevFormData,
       selectedFunction: value,
     }));
+
+
   };
+
+
 
   return (
     <Card className="">
@@ -50,6 +70,9 @@ const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
                   const func = contractFunctions[funcKey];
                   const paramNames = func.inputs.map((input: any) => input.name).join(", ");
                   return (
+                    // <SelectItem key={funcKey} value={func.name + `#` + funcKey}>
+                    //   {func.name} ({paramNames})
+                    // </SelectItem>
                     <SelectItem key={funcKey} value={func.name}>
                       {func.name} ({paramNames})
                     </SelectItem>

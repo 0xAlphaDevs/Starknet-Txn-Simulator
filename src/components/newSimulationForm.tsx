@@ -11,6 +11,7 @@ import { getFunctionsForContract } from "@/lib/simulate";
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const [contractFunctions, setContractFunctions] = React.useState<DecodedSelector>({});
+  const [selectedFunctionSelector, setSelectedFunctionSelector] = React.useState<string>("");
   const [step, setStep] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
@@ -63,11 +64,11 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           <Step1 formData={formData} setFormData={setFormData} />
         ) : step === 2 ? (
           <div className="flex flex-col gap-4">
-            <Step2 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} loading={loading} />
+            <Step2 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} loading={loading} setSelectedFunctionSelector={setSelectedFunctionSelector} />
           </div>
         ) : step === 3 ? (
           <div className="flex flex-col gap-4">
-            <Step3 formData={formData} setFormData={setFormData} />
+            <Step3 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} selectedFunctionSelector={selectedFunctionSelector} />
           </div>
         ) : step === 4 ? (
           <div className="flex flex-col gap-4">
