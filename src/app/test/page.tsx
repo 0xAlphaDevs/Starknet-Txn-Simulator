@@ -4,6 +4,7 @@ import { useAccount, useConnect, useDisconnect } from "@starknet-react/core";
 import { getFunctionsForContract, testFunction } from "@/lib/simulate";
 import { useState } from "react";
 import { DecodedSelector } from "@/lib/decoder";
+import { callAiAgent } from "@/lib/callAiAgent";
 
 const Test = () => {
   const { address } = useAccount();
@@ -17,11 +18,7 @@ const Test = () => {
   }
 
   async function handleClick2() {
-    const functions = await getFunctionsForContract(
-      "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8"
-    );
-    console.log(functions);
-    setContractFunctions(functions);
+    callAiAgent();
   }
 
   return (
@@ -29,20 +26,6 @@ const Test = () => {
       {/* <WalletBar /> */}
       <button onClick={handleClick}>Test</button>
       <button onClick={handleClick2}>Test 2</button>
-      {Object.entries(contractFunctions).map(([key, value]): any => {
-        return (
-          <div key={key}>
-            {key} : {value.name} :{" "}
-            {Object.entries(value.inputs).map(([k, v]) => {
-              return (
-                <div key={k}>
-                  {k} : {v.name} : {v.type}
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
     </main>
   );
 };

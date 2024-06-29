@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React from 'react'
+import React, { useEffect } from "react";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -18,34 +18,21 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const Step2 = ({ formData, setFormData, contractFunctions, loading, setSelectedFunctionSelector }: any) => {
-
-  // const handleFunctionChange = (value: string) => {
-  //   let arr = value.split("#")
-  //   console.log(arr);
-
-
-  //   setFormData((prevFormData: any) => ({
-  //     ...prevFormData,
-  //     selectedFunction: arr[0],
-  //   }));
-  //   setSelectedFunctionSelector(arr[1])
-  //   console.log(formData);
-
-  // };
+const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
   const handleFunctionChange = (value: string) => {
-
-
+    let arr = value.split("#");
+    console.log(arr);
 
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      selectedFunction: value,
+      selectedFunction: arr[0],
+      functionParams: contractFunctions[arr[1]].inputs,
     }));
-
-
   };
 
-
+  useEffect(() => {
+    console.log("Form Data", formData);
+  }, [formData]);
 
   return (
     <Card className="">
@@ -61,21 +48,23 @@ const Step2 = ({ formData, setFormData, contractFunctions, loading, setSelectedF
         ) : (
           <div className="flex flex-col space-y-1.5">
             <Label htmlFor="functionSelect">Select Function</Label>
-            <Select onValueChange={handleFunctionChange} value={formData.selectedFunction}>
+            <Select onValueChange={handleFunctionChange}>
               <SelectTrigger id="functionSelect">
                 <SelectValue placeholder="Select a function" />
               </SelectTrigger>
               <SelectContent position="popper">
                 {Object.keys(contractFunctions).map((funcKey) => {
                   const func = contractFunctions[funcKey];
-                  const paramNames = func.inputs.map((input: any) => input.name).join(", ");
+                  const paramNames = func.inputs
+                    .map((input: any) => input.name)
+                    .join(", ");
                   return (
-                    // <SelectItem key={funcKey} value={func.name + `#` + funcKey}>
-                    //   {func.name} ({paramNames})
-                    // </SelectItem>
-                    <SelectItem key={funcKey} value={func.name}>
+                    <SelectItem key={funcKey} value={func.name + `#` + funcKey}>
                       {func.name} ({paramNames})
                     </SelectItem>
+                    // <SelectItem key={funcKey} value={func.name}>
+                    //   {func.name} ({paramNames})
+                    // </SelectItem>
                   );
                 })}
               </SelectContent>
@@ -84,7 +73,7 @@ const Step2 = ({ formData, setFormData, contractFunctions, loading, setSelectedF
         )}
       </CardContent>
     </Card>
-  )
-}
+  );
+};
 
 export default Step2;

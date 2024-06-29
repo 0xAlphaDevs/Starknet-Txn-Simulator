@@ -8,10 +8,9 @@ import Step4 from "./simulationStepper/step4";
 import { DecodedSelector } from "@/lib/decoder";
 import { getFunctionsForContract } from "@/lib/simulate";
 
-
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
-  const [contractFunctions, setContractFunctions] = React.useState<DecodedSelector>({});
-  const [selectedFunctionSelector, setSelectedFunctionSelector] = React.useState<string>("");
+  const [contractFunctions, setContractFunctions] =
+    React.useState<DecodedSelector>({});
   const [step, setStep] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [formData, setFormData] = React.useState({
@@ -20,27 +19,31 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     // abi: "",
     selectedFunction: "",
     functionParams: {},
+    functionParamsValues: {},
   });
-
-
 
   const handleNextStep = async () => {
     if (step < 4) {
-      setStep(step + 1);
       if (step == 1) {
         setLoading(true);
         console.log("Calling after step 1");
-        const functions = await getFunctionsForContract(formData.contractAddress);
+        const functions = await getFunctionsForContract(
+          formData.contractAddress
+        );
         console.log(functions);
         setContractFunctions(functions);
+        setStep(step + 1);
         setLoading(false);
-      }
-      else if (step == 2) {
+      } else if (step == 2) {
         console.log("Calling after step 2");
-
-      }
-      else if (step == 3) {
-        console.log("Calling after step 3");
+        setStep(step + 1);
+      } else if (step == 3) {
+        console.log("Simulating transaction...");
+        // build call data to be sent to the simulateTransaction function
+        // case 1: no params -- just pass 0x0
+        // case 2: no integer type params -- no need to pass 0x0 at the end
+        // case 3: integer type params -- pass 0x0 at the end i.e. increment the length of the params array by 1
+        setStep(step + 1);
       }
     }
   };
@@ -54,21 +57,32 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    setSimulationStarted(false)
+    setSimulationStarted(false);
   };
 
   return (
-    <div className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-64"}`}>
+    <div
+      className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-64"}`}
+    >
       <div className="">
         {step === 1 ? (
           <Step1 formData={formData} setFormData={setFormData} />
         ) : step === 2 ? (
           <div className="flex flex-col gap-4">
-            <Step2 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} loading={loading} setSelectedFunctionSelector={setSelectedFunctionSelector} />
+            <Step2
+              formData={formData}
+              setFormData={setFormData}
+              contractFunctions={contractFunctions}
+              loading={loading}
+            />
           </div>
         ) : step === 3 ? (
           <div className="flex flex-col gap-4">
-            <Step3 formData={formData} setFormData={setFormData} contractFunctions={contractFunctions} selectedFunctionSelector={selectedFunctionSelector} />
+            <Step3
+              formData={formData}
+              setFormData={setFormData}
+              contractFunctions={contractFunctions}
+            />
           </div>
         ) : step === 4 ? (
           <div className="flex flex-col gap-4">
@@ -78,41 +92,63 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           <div className="flex flex-col gap-4">
             <p>other case </p>
           </div>
-        )
-        }
+        )}
       </div>
       <div className="">
         {step === 1 ? (
           <div className="flex justify-between">
-            <Button variant="outline" onClick={() => setSimulationStarted(false)} className="rounded-[10px] text-md">
+            <Button
+              variant="outline"
+              onClick={() => setSimulationStarted(false)}
+              className="rounded-[10px] text-md"
+            >
               Cancel
             </Button>
-            <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
+            <Button onClick={handleNextStep} className="rounded-[10px] text-md">
+              Next
+            </Button>
           </div>
         ) : step === 2 ? (
           <div className="flex justify-between">
-            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
+            <Button
+              onClick={handlePreviousStep}
+              className="rounded-[10px] text-md"
+            >
               Previous
             </Button>
-            <Button onClick={handleNextStep} className="rounded-[10px] text-md">Next</Button>
+            <Button onClick={handleNextStep} className="rounded-[10px] text-md">
+              Next
+            </Button>
           </div>
         ) : step === 3 ? (
           <div className="flex justify-between">
-            <Button onClick={handlePreviousStep} className="rounded-[10px] text-md">
+            <Button
+              onClick={handlePreviousStep}
+              className="rounded-[10px] text-md"
+            >
               Previous
             </Button>
-            <Button onClick={handleNextStep} className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400">Simulate Transaction</Button>
+            <Button
+              onClick={handleNextStep}
+              className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400"
+            >
+              Simulate Transaction
+            </Button>
           </div>
         ) : step === 4 ? (
           <div className="flex justify-center">
-            <Button onClick={handleSubmit} className="rounded-[10px] text-md bg-green-500 hover:bg-green-400">Save Simulation</Button>
+            <Button
+              onClick={handleSubmit}
+              className="rounded-[10px] text-md bg-green-500 hover:bg-green-400"
+            >
+              Save Simulation
+            </Button>
           </div>
         ) : (
           <div className="flex flex-col gap-4">
             <p>other case </p>
           </div>
-        )
-        }
+        )}
       </div>
     </div>
   );

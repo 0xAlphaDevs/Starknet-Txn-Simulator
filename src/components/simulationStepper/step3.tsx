@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -12,16 +12,23 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const Step3 = ({ formData, setFormData, contractFunctions, selectedFunctionSelector }: any) => {
-  const handleFunctionChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+const Step3 = ({ formData, setFormData, contractFunctions }: any) => {
+  const handleFunctionChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
     setFormData((prevFormData: any) => ({
       ...prevFormData,
-      [id]: value,
+      functionParamsValues: {
+        ...prevFormData.functionParamsValues,
+        [id]: value,
+      },
     }));
   };
 
-  console.log(contractFunctions[selectedFunctionSelector]);
+  useEffect(() => {
+    console.log(formData);
+  }, [formData]);
 
   return (
     <Card className="">
@@ -36,7 +43,25 @@ const Step3 = ({ formData, setFormData, contractFunctions, selectedFunctionSelec
           <div className="flex flex-col space-y-1.5">
             <Label>Function: {formData.selectedFunction}</Label>
           </div>
-          <div className="flex flex-col space-y-1.5">
+          {formData.functionParams.map((input: any, index: number) => (
+            <div key={index} className="flex flex-col space-y-1.5">
+              <Label htmlFor={input.name}>{input.name}</Label>
+              <p className="text-muted-foreground">{input.type}</p>
+              <Input
+                id={input.name}
+                placeholder={`Enter ${input.name}`}
+                type={input.type.includes("integer") ? "number" : "text"}
+                value={
+                  formData.functionParamsValues[input.name]
+                    ? formData.functionParamsValues[input.name]
+                    : ""
+                }
+                onChange={handleFunctionChange}
+                required
+              />
+            </div>
+          ))}
+          {/* <div className="flex flex-col space-y-1.5">
             <Label htmlFor="param1">Parameter 1</Label>
             <Input
               id="param1"
@@ -55,7 +80,7 @@ const Step3 = ({ formData, setFormData, contractFunctions, selectedFunctionSelec
               onChange={handleFunctionChange}
               required
             />
-          </div>
+          </div> */}
         </div>
       </CardContent>
     </Card>
