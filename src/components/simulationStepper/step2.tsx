@@ -57,9 +57,6 @@ const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
                     <SelectItem key={funcKey} value={func.name + `#` + funcKey}>
                       {func.name} ({paramNames})
                     </SelectItem>
-                    // <SelectItem key={funcKey} value={func.name}>
-                    //   {func.name} ({paramNames})
-                    // </SelectItem>
                   );
                 })}
               </SelectContent>

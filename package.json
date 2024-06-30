@@ -1,5 +1,5 @@
 {
-  "name": "starknet-simulator-ai",
+  "name": "starknet-txn-simulator",
   "version": "0.1.0",
   "private": true,
   "scripts": {

@@ -18,7 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Textarea } from '../ui/textarea';
 
 const Step1 = ({ formData, setFormData }: any) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -60,16 +59,6 @@ const Step1 = ({ formData, setFormData }: any) => {
               </SelectContent>
             </Select>
           </div>
-          {/* <div className="flex flex-col space-y-1.5">
-            <Label htmlFor="abi">ABI</Label>
-            <Textarea
-              id='abi'
-              placeholder='Enter your ABI'
-              value={formData.abi}
-              onChange={handleInputChange}
-              required
-            />
-          </div> */}
         </div>
       </CardContent>
     </Card>

@@ -28,7 +28,6 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const [formData, setFormData] = React.useState({
     contractAddress: "",
     network: "mainnet",
-    // abi: "",
     selectedFunction: "",
     functionParams: [],
     functionParamsValues: {},
