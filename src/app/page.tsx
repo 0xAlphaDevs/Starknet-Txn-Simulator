@@ -27,7 +27,7 @@ export default function Home() {
       <div className="grid grid-cols-3 gap-8 px-20 py-8 ">
         <Card className="shadow-sm border-none h-full w-full bg-slate-300 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
           <CardHeader>
-            <CardTitle className="text-center ">EASY TO USE AI</CardTitle>
+            <CardTitle className="text-center ">EASY TO USE UI</CardTitle>
             <CardDescription className="text-center pt-1">
               Users only need to enter contract addresses. ABIs and function
               names are aueried and populated autimatically.
