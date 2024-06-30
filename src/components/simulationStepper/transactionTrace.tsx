@@ -52,36 +52,40 @@ const TransactionTrace = ({ internalCalls }: any) => {
               <p>Function Name : {call.functionName}</p>
 
             </div>
-
+            {/* Display Inputs */}
             <div className='flex flex-col gap-2'>
-              <p>Input </p>
-              <div className='flex gap-8'>
-                <div className='flex flex-col gap-2'>
-                  <p>Name : </p>
-                  <p>{call.input.name}</p>
+              <p>Inputs:</p>
+              {call.inputs.map((input: any, inputIndex: number) => (
+                <div key={inputIndex} className='flex gap-8'>
+                  <div className='flex flex-col gap-2'>
+                    <p>Name:</p>
+                    <p>{input.name}</p>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p>Type:</p>
+                    <p>{input.type}</p>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p>Value:</p>
+                    <p>{input.value[0]}</p>
+                  </div>
                 </div>
-                <div className='flex flex-col gap-2'>
-                  <p>Type : </p>
-                  <p>{call.input.type}</p>
-                </div>
-                <div className='flex flex-col gap-2'>
-                  <p>value : </p>
-                  <p>{call.input.value}</p>
-                </div>
-              </div>
+              ))}
             </div>
             <div className='flex flex-col gap-2'>
-              <p>Output </p>
-              <div className='flex gap-8'>
-                <div className='flex flex-col gap-2'>
-                  <p>Type : </p>
-                  <p>{call.output.type}</p>
+              <p>Outputs:</p>
+              {call.outputs.map((output: any, outputIndex: number) => (
+                <div key={outputIndex} className='flex gap-8'>
+                  <div className='flex flex-col gap-2'>
+                    <p>Type:</p>
+                    <p>{output.type}</p>
+                  </div>
+                  <div className='flex flex-col gap-2'>
+                    <p>Value:</p>
+                    <p>{output.value[0]}</p>
+                  </div>
                 </div>
-                <div className='flex flex-col gap-2'>
-                  <p>value : </p>
-                  <p>{call.output.value}</p>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
