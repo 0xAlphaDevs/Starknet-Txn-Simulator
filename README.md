@@ -29,7 +29,7 @@ AI-Enhanced Transaction Simulator with User-Friendly Insights on Starknet | Buil
 
 ## Deployed Contract on Galadriel Devnet
 
-- Galadriel Devnet Contract - [0xCCF31d992aa2616E47B1c0860fD1e4787892dF49](https://explorer.galadriel.com/address/0xCCF31d992aa2616E47B1c0860fD1e4787892dF49)
+- Galadriel Devnet Contract - [0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8](https://explorer.galadriel.com/address/0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8)
 
 ## Instructions to Setup
 
