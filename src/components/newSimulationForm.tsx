@@ -33,6 +33,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     functionParams: [],
     functionParamsValues: {},
   });
+  const [internalCalls, setInternalCalls] = React.useState<any[]>([]);
 
   const { toast } = useToast();
 
@@ -129,6 +130,8 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           setLoading(false);
         } else {
           console.log("Transaction Result : ", transactionTrace);
+          setInternalCalls(transactionTrace.internal_calls);
+
           toast({
             title: "Simulation Successful",
             description: "You can now view the simulation results",
@@ -153,8 +156,8 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const handleStartNewSimulation = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    setStep(3); // TESTING
-    // setSimulationStarted(false);
+    // setStep(3); // TESTING
+    setSimulationStarted(false);
   };
 
   const handleSaveSimulation = (e: React.FormEvent) => {
@@ -170,7 +173,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
 
   return (
     <div
-      className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-12" : "px-64"}`}
+      className={`flex flex-col gap-8 mt-8 my-8${step === 4 ? "" : "px-64"}`}
     >
       {loading ? (
         <div className="flex flex-col gap-4 items-center font-bold opacity-80 justify-center mt-20 ">
@@ -200,7 +203,10 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
               </div>
             ) : step === 4 ? (
               <div className="flex flex-col gap-4">
-                <Step4 formData={formData} setformData={setFormData} />
+                <Step4
+                  internalCalls={internalCalls}
+                  setformData={setFormData}
+                />
               </div>
             ) : (
               <div className="flex flex-col gap-4">

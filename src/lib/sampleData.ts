@@ -64,8 +64,19 @@ export const traceData = {
             "0x26dd62b928c8cbbac8639323678ab1332a3a905960130db19435c2e6901190d",
           ],
         },
+        {
+          name: "amount",
+          type: "core::starknet::contract_address::ContractAddress",
+          value: [
+            "0x26dd62b928c8cbbac8639323678ab1332a3a905960130db19435c2e6901190d",
+          ],
+        },
       ],
       outputs: [
+        {
+          type: "core::integer::u256",
+          value: [821782],
+        },
         {
           type: "core::integer::u256",
           value: [821782],

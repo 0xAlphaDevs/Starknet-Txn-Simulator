@@ -33,3 +33,20 @@ export function buildCallData(params: any, values: any) {
   }
   return callData;
 }
+
+export function hexToString(hex: string) {
+  console.log("Converting hex to string: ", hex);
+  const result = hex2a(hex);
+
+  console.log("Result: ", result);
+
+  return result;
+}
+
+function hex2a(hexx: string) {
+  var hex = hexx.toString(); //force conversion
+  var str = "";
+  for (var i = 0; i < hex.length; i += 2)
+    str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+  return str;
+}

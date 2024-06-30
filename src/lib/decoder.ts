@@ -1,4 +1,5 @@
 import { RpcProvider, Abi, Contract, selector } from "starknet";
+import { hexToString } from "./utils";
 
 type CallPuts = {
   name: string;
@@ -183,6 +184,14 @@ const decodePuts = (abi: Abi, call: string[], puts: CallPuts) => {
           value: decodedStruct,
         });
       }
+    } else if (elementType.includes("felt")) {
+      stopIndex += 1; // Increment stopIndex for recognized StarknetAbiTypes
+      const value = call.slice(startIndex, stopIndex);
+      decodedCall.push({
+        name: put.name,
+        type: put.type,
+        value: value.map((v) => hexToString(v)),
+      });
     } else {
       stopIndex += 1; // Increment stopIndex for recognized StarknetAbiTypes
       decodedCall.push({

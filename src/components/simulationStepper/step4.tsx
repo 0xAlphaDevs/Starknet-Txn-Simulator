@@ -12,32 +12,20 @@ import {
 import { Button } from "../ui/button";
 import TransactionTrace from "./transactionTrace";
 import { traceData } from "@/lib/sampleData";
+import TransactionSummary from "./transactionSummary";
 
-const Step4 = ({ formData, setFormData }: any) => {
+const Step4 = ({ internalCalls, setFormData }: any) => {
   const handleFunctionChange = (value: string) => {
     setFormData((prevFormData: any) => ({
       ...prevFormData,
     }));
   };
-  // TO DO : Fetch internalCalls dynamically 🟡
-
-  const internalCalls = traceData.internal_calls
 
   return (
-    <div className="flex gap-12">
+    <div className="flex flex-col gap-12">
       <TransactionTrace internalCalls={internalCalls} />
-      <Card className="w-full">
-        <CardHeader>
-          <CardTitle>Summarize Transaction</CardTitle>
-          <CardDescription>Card Description</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p>Card Content</p>
-        </CardContent>
-        <CardFooter>
-          <p>Card Footer</p>
-        </CardFooter>
-      </Card>
+
+      <TransactionSummary internalCalls={internalCalls} />
     </div>
   );
 };
