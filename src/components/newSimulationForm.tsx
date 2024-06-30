@@ -7,12 +7,14 @@ import Step3 from "./simulationStepper/step3";
 import Step4 from "./simulationStepper/step4";
 import { DecodedSelector } from "@/lib/decoder";
 import { getFunctionsForContract } from "@/lib/simulate";
+import Spinner from "./spinner";
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const [contractFunctions, setContractFunctions] =
     React.useState<DecodedSelector>({});
   const [step, setStep] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
+  const [loadingMessage, setLoadingMessage] = React.useState("");
   const [formData, setFormData] = React.useState({
     contractAddress: "",
     network: "mainnet",
@@ -26,6 +28,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     if (step < 4) {
       if (step == 1) {
         setLoading(true);
+        setLoadingMessage("Fetching ABI and listing functions...");
         console.log("Calling after step 1");
         const functions = await getFunctionsForContract(
           formData.contractAddress
@@ -38,12 +41,15 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
         console.log("Calling after step 2");
         setStep(step + 1);
       } else if (step == 3) {
+        setLoading(true);
+        setLoadingMessage("Simulating transaction...");
         console.log("Simulating transaction...");
         // build call data to be sent to the simulateTransaction function
         // case 1: no params -- just pass 0x0
         // case 2: no integer type params -- no need to pass 0x0 at the end
         // case 3: integer type params -- pass 0x0 at the end i.e. increment the length of the params array by 1
         setStep(step + 1);
+        setLoading(false);
       }
     }
   };
@@ -64,92 +70,108 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     <div
       className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-64"}`}
     >
-      <div className="">
-        {step === 1 ? (
-          <Step1 formData={formData} setFormData={setFormData} />
-        ) : step === 2 ? (
-          <div className="flex flex-col gap-4">
-            <Step2
-              formData={formData}
-              setFormData={setFormData}
-              contractFunctions={contractFunctions}
-              loading={loading}
-            />
+      {loading ? (
+        <div className="flex flex-col gap-4 items-center font-bold opacity-80 justify-center mt-20 ">
+          <Spinner />
+          <p>{loadingMessage}</p>
+        </div>
+      ) : (
+        <div>
+          <div className="">
+            {step === 1 ? (
+              <Step1 formData={formData} setFormData={setFormData} />
+            ) : step === 2 ? (
+              <div className="flex flex-col gap-4">
+                <Step2
+                  formData={formData}
+                  setFormData={setFormData}
+                  contractFunctions={contractFunctions}
+                />
+              </div>
+            ) : step === 3 ? (
+              <div className="flex flex-col gap-4">
+                <Step3
+                  formData={formData}
+                  setFormData={setFormData}
+                  contractFunctions={contractFunctions}
+                />
+              </div>
+            ) : step === 4 ? (
+              <div className="flex flex-col gap-4">
+                <Step4 formData={formData} setformData={setFormData} />
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <p>other case </p>
+              </div>
+            )}
           </div>
-        ) : step === 3 ? (
-          <div className="flex flex-col gap-4">
-            <Step3
-              formData={formData}
-              setFormData={setFormData}
-              contractFunctions={contractFunctions}
-            />
+          <div className=" mt-4">
+            {step === 1 ? (
+              <div className="flex justify-between">
+                <Button
+                  variant="outline"
+                  onClick={() => setSimulationStarted(false)}
+                  className="rounded-[10px] text-md"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleNextStep}
+                  className="rounded-[10px] text-md"
+                >
+                  Next
+                </Button>
+              </div>
+            ) : step === 2 ? (
+              <div className="flex justify-between">
+                <Button
+                  variant={"outline"}
+                  onClick={handlePreviousStep}
+                  className="rounded-[10px] text-md"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNextStep}
+                  className="rounded-[10px] text-md"
+                >
+                  Next
+                </Button>
+              </div>
+            ) : step === 3 ? (
+              <div className="flex justify-between">
+                <Button
+                  variant={"outline"}
+                  onClick={handlePreviousStep}
+                  className="rounded-[10px] text-md"
+                >
+                  Previous
+                </Button>
+                <Button
+                  onClick={handleNextStep}
+                  className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400"
+                >
+                  Simulate Transaction
+                </Button>
+              </div>
+            ) : step === 4 ? (
+              <div className="flex justify-center">
+                <Button
+                  onClick={handleSubmit}
+                  className="rounded-[10px] text-md bg-green-500 hover:bg-green-400"
+                >
+                  Save Simulation
+                </Button>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                <p>other case </p>
+              </div>
+            )}
           </div>
-        ) : step === 4 ? (
-          <div className="flex flex-col gap-4">
-            <Step4 formData={formData} setformData={setFormData} />
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            <p>other case </p>
-          </div>
-        )}
-      </div>
-      <div className="">
-        {step === 1 ? (
-          <div className="flex justify-between">
-            <Button
-              variant="outline"
-              onClick={() => setSimulationStarted(false)}
-              className="rounded-[10px] text-md"
-            >
-              Cancel
-            </Button>
-            <Button onClick={handleNextStep} className="rounded-[10px] text-md">
-              Next
-            </Button>
-          </div>
-        ) : step === 2 ? (
-          <div className="flex justify-between">
-            <Button
-              onClick={handlePreviousStep}
-              className="rounded-[10px] text-md"
-            >
-              Previous
-            </Button>
-            <Button onClick={handleNextStep} className="rounded-[10px] text-md">
-              Next
-            </Button>
-          </div>
-        ) : step === 3 ? (
-          <div className="flex justify-between">
-            <Button
-              onClick={handlePreviousStep}
-              className="rounded-[10px] text-md"
-            >
-              Previous
-            </Button>
-            <Button
-              onClick={handleNextStep}
-              className="rounded-[10px] text-md bg-blue-500 hover:bg-blue-400"
-            >
-              Simulate Transaction
-            </Button>
-          </div>
-        ) : step === 4 ? (
-          <div className="flex justify-center">
-            <Button
-              onClick={handleSubmit}
-              className="rounded-[10px] text-md bg-green-500 hover:bg-green-400"
-            >
-              Save Simulation
-            </Button>
-          </div>
-        ) : (
-          <div className="flex flex-col gap-4">
-            <p>other case </p>
-          </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };
