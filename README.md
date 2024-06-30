@@ -5,7 +5,9 @@ AI-Enhanced Transaction Simulator with User-Friendly Insights on Starknet | Buil
 ## Features
 
 - **Easy To Use UI** : Users only need to enter contract addresses. ABIs and function names are aueried and populated autimatically.
+
 - **Clear & Concise Simulations** : Clear and easy to understand transaction traces data displayed in the web application.
+
 - **AI Powered Txn Summary** : Decentralized & On chain AI inference using Galadriel L1 to generate txn summary.
 
 ## Table of Contents
@@ -14,8 +16,8 @@ AI-Enhanced Transaction Simulator with User-Friendly Insights on Starknet | Buil
 2. [Deployed Contracts](#deployed-contract-on-galadriel-devnet)
 3. [Instructions to setup and run locally ](#instructions-to-setup)
 4. [Our Solution (Architecture)](#our-solution-architecture)
-5. [Future Vision](#future-vision)
-6. [App Demo](#app-demo-screenshots)
+5. [App Demo](#app-demo-screenshots)
+6. [Future Vision](#future-vision)
 7. [Tech Stack](#tech-stack)
 8. [Team](#team)
 
@@ -45,18 +47,15 @@ Follow these instructions to set up and run the project:
 
 ![image](/public/appDemo/architecture.png)
 
-## Future Vision
-
-- Integrate txn simulator with dApps on starknet. Develep a widget/extension for this purpose in upcoming steps.
-- Support chaining of multiple transactions
-- Better UI and support for complex data types decoding for Starknet blockchain
-
 ## App Demo Screenshots
 
+**_Landing Page_**
 ![image](/public/appDemo/1.jpeg)
 
+**_Getting Started_**
 ![image](/public/appDemo/2.jpeg)
 
+**_Simulation Steps_**
 ![image](/public/appDemo/3.jpeg)
 
 ![image](/public/appDemo/4.jpeg)
@@ -65,9 +64,17 @@ Follow these instructions to set up and run the project:
 
 ![image](/public/appDemo/6.jpeg)
 
+**_Transaction Trace_**
 ![image](/public/appDemo/7.jpeg)
 
+**_Transaction Summary_**
 ![image](/public/appDemo/8.jpeg)
+
+## Future Vision
+
+- Integrate txn simulator with dApps on starknet. Develep a widget/extension for this purpose in upcoming steps.
+- Support chaining of multiple transactions
+- Better UI and support for complex data types decoding for Starknet blockchain
 
 ## Tech Stack
 
