@@ -13,7 +13,7 @@ const Test = () => {
   );
   function handleClick() {
     testFunction(
-      "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9"
+      "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d"
     );
   }
 

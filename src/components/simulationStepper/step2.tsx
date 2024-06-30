@@ -21,7 +21,6 @@ import {
 const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
   const handleFunctionChange = (value: string) => {
     let arr = value.split("#");
-    console.log(arr);
 
     setFormData((prevFormData: any) => ({
       ...prevFormData,
@@ -29,10 +28,6 @@ const Step2 = ({ formData, setFormData, contractFunctions, loading }: any) => {
       functionParams: contractFunctions[arr[1]].inputs,
     }));
   };
-
-  useEffect(() => {
-    console.log("Form Data", formData);
-  }, [formData]);
 
   return (
     <Card className="">

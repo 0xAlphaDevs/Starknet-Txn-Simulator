@@ -69,7 +69,7 @@ const decodeInvocation = async (
   const abi = await getAbi(contractAddress, provider);
 
   const selectors = getSelectors(abi);
-  console.log("Selectors:", selectors);
+  // console.log("Selectors:", selectors);
 
   const functionName = getFunctionName(entryPointSelector, selectors);
 
@@ -123,16 +123,9 @@ const decodePuts = (abi: Abi, call: string[], puts: CallPuts) => {
 
     // TODO: Handle bool, byteArray, and complex.
     if (elementType.includes("integer") || elementType === "Uint256") {
-      // 🟡
-      console.log("Integer detected:");
-      console.log("Start index:", startIndex);
-
       stopIndex += 2; // For integers and Uint256
-      console.log("Stop index:", stopIndex);
 
       call = call.slice(startIndex, stopIndex);
-
-      console.log("Call:", call);
 
       // parse the integer and then push it to the decodedCall array
       let values = [];

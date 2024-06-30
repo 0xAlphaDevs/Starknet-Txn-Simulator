@@ -6,10 +6,11 @@ import Step2 from "./simulationStepper/step2";
 import Step3 from "./simulationStepper/step3";
 import Step4 from "./simulationStepper/step4";
 import { DecodedSelector } from "@/lib/decoder";
-import { getFunctionsForContract } from "@/lib/simulate";
+import { getFunctionsForContract, simulateTransaction } from "@/lib/simulate";
 import Spinner from "./spinner";
-import { validateStarknetAddress } from "@/lib/utils";
+import { buildCallData, validateStarknetAddress } from "@/lib/utils";
 import { useToast } from "@/components/ui/use-toast";
+import { useAccount } from "@starknet-react/core";
 
 interface SimulationResponse {
   status: boolean;
@@ -17,6 +18,7 @@ interface SimulationResponse {
 }
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
+  const { address } = useAccount();
   const [contractFunctions, setContractFunctions] = React.useState<
     DecodedSelector | SimulationResponse
   >({});
@@ -105,15 +107,39 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
         setLoading(true);
         setLoadingMessage("Simulating transaction...");
         console.log("Simulating transaction...");
-        // TO DO : build call data to be sent to the simulateTransaction function
+        // build call data to be sent to the simulateTransaction function
+        const callData = buildCallData(
+          formData.functionParams,
+          formData.functionParamsValues
+        );
+
+        const transactionTrace = await simulateTransaction(
+          address as string,
+          formData.contractAddress,
+          formData.selectedFunction,
+          callData
+        );
+
+        if (transactionTrace.error) {
+          toast({
+            title: "Simulation Error",
+            description: "There was an error decoding the transaction trace",
+            variant: "destructive",
+          });
+          setLoading(false);
+        } else {
+          console.log("Transaction Result : ", transactionTrace);
+          toast({
+            title: "Simulation Successful",
+            description: "You can now view the simulation results",
+          });
+          setLoading(false);
+          setStep(step + 1);
+        }
+
         // case 1: no params -- just pass 0x0
         // case 2: no integer type params -- no need to pass 0x0 at the end
         // case 3: integer type params -- pass 0x0 at the end i.e. increment the length of the params array by 1
-        setTimeout(() => {
-          setLoadingMessage("Transaction simulated successfully");
-          setLoading(false);
-          setStep(step + 1);
-        }, 2000);
       }
     }
   };
@@ -127,7 +153,8 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
   const handleStartNewSimulation = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    setSimulationStarted(false);
+    setStep(3); // TESTING
+    // setSimulationStarted(false);
   };
 
   const handleSaveSimulation = (e: React.FormEvent) => {
@@ -143,7 +170,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
 
   return (
     <div
-      className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-24" : "px-64"}`}
+      className={`flex flex-col gap-8 mt-8 ${step === 4 ? "px-12" : "px-64"}`}
     >
       {loading ? (
         <div className="flex flex-col gap-4 items-center font-bold opacity-80 justify-center mt-20 ">

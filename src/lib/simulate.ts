@@ -56,7 +56,7 @@ export const simulateTransaction = async (
     // const cairoVersion = "1";
 
     const entrypoint = selector.getSelectorFromName(functionName); // get the selector for the function
-    console.log("Entrypoint:", entrypoint);
+    // console.log("Entrypoint:", entrypoint);
 
     const signature: ArraySignatureType = [];
 
@@ -73,12 +73,19 @@ export const simulateTransaction = async (
 
     console.log("Simulation Response:", simulation);
     // LATER: decode trace
-    if (simulation) {
+    if (!simulation[0].transaction_trace.execute_invocation.revert_reason) {
       const trace = await decodeTrace(simulation[0].transaction_trace);
-      console.log("Final output after decoder :", trace);
+      // console.log("Final output after decoder :", trace);
+      return { ...trace, error: false };
     }
+    return {
+      error: true,
+    };
   } catch (err) {
-    console.error("Error fetching data: ", err);
+    console.error(err);
+    return {
+      error: true,
+    };
   }
 };
 
@@ -126,7 +133,7 @@ const simulateTransactions = async (
 
     const res = await response.json();
 
-    return res.result as SimulateTransactionResponse;
+    return res.result as any;
   } catch (error) {
     console.error("Error fetching data: ", error);
   }
@@ -171,17 +178,17 @@ export const testFunction = (walletAddress: string) => {
   // );
 
   // transfer usdc -- 2 params (recipient, amount) -- we pass 0x0 as the last param for the integer
-  // simulateTransaction(
-  //   walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
-  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
-  //   "transfer",
-  //   [
-  //     "0x3",
-  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
-  //     "0x9",
-  //     "0x0",
-  //   ]
-  // );
+  simulateTransaction(
+    walletAddress, // 0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9
+    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+    "transfer",
+    [
+      "0x3",
+      "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9",
+      "15",
+      "0x0",
+    ]
+  );
 
   // transfer_from usdc -- 3 params (sender, recipient, amount) -- we pass 0x0 as the last param for the integer ❌
   // simulateTransaction(
@@ -205,7 +212,7 @@ export const testFunction = (walletAddress: string) => {
   //   [
   //     "0x3",
   //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
-  //     "0x9",
+  //     "9",
   //     "0x0",
   //   ]
   // );
@@ -223,15 +230,15 @@ export const testFunction = (walletAddress: string) => {
   // );
 
   // balance_of - 1 param
-  simulateTransaction(
-    walletAddress,
-    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
-    "balance_of",
-    [
-      "0x1",
-      "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
-    ]
-  );
+  // simulateTransaction(
+  //   walletAddress,
+  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+  //   "balance_of",
+  //   [
+  //     "0x1",
+  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+  //   ]
+  // );
 };
 
 export const getFunctionsForContract = async (contractAddress: string) => {

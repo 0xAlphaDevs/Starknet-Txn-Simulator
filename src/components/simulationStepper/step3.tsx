@@ -26,10 +26,6 @@ const Step3 = ({ formData, setFormData, contractFunctions }: any) => {
     }));
   };
 
-  useEffect(() => {
-    console.log(formData);
-  }, [formData]);
-
   return (
     <Card className="">
       <CardHeader>
