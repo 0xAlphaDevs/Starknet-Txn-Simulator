@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,21 +9,20 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from '../ui/button';
+import { Button } from "../ui/button";
 
 const Step4 = ({ formData, setFormData }: any) => {
-
   const handleFunctionChange = (value: string) => {
     setFormData((prevFormData: any) => ({
       ...prevFormData,
     }));
   };
-
+  // TO DO : Design these cards
   return (
     <div className="flex gap-12">
-      <Card className='w-full h-96'>
+      <Card className="w-full h-96">
         <CardHeader>
-          <CardTitle>Invocation Trace</CardTitle>
+          <CardTitle>Transaction Trace</CardTitle>
           <CardDescription>Card Description</CardDescription>
         </CardHeader>
         <CardContent>
@@ -33,7 +32,7 @@ const Step4 = ({ formData, setFormData }: any) => {
           <p>Card Footer</p>
         </CardFooter>
       </Card>
-      <Card className='w-full h-96'>
+      <Card className="w-full h-96">
         <CardHeader>
           <CardTitle>Summarize Transaction</CardTitle>
           <CardDescription>Card Description</CardDescription>
@@ -45,7 +44,6 @@ const Step4 = ({ formData, setFormData }: any) => {
           <p>Card Footer</p>
         </CardFooter>
       </Card>
-
     </div>
   );
 };

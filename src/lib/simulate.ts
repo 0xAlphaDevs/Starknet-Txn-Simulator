@@ -15,6 +15,7 @@ import {
   getAbi,
   NETHERMIND_RPC_URL,
 } from "./decoder";
+import { fsync } from "fs";
 
 export type Function = {
   read: {
@@ -222,15 +223,15 @@ export const testFunction = (walletAddress: string) => {
   // );
 
   // balance_of - 1 param
-  // simulateTransaction(
-  //   walletAddress,
-  //   "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
-  //   "balance_of",
-  //   [
-  //     "0x1",
-  //     "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
-  //   ]
-  // );
+  simulateTransaction(
+    walletAddress,
+    "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8", // usdc contract
+    "balance_of",
+    [
+      "0x1",
+      "0x026DD62b928c8cBBac8639323678Ab1332a3A905960130DB19435C2e6901190d",
+    ]
+  );
 };
 
 export const getFunctionsForContract = async (contractAddress: string) => {

@@ -67,8 +67,8 @@ const NewSimulation = () => {
               <p> 3. </p>
               <p>
                 {" "}
-                Select the function and enter the params to simulate a
-                transaction :/
+                Now you can just select the function and enter the params to
+                simulate a transaction 🚀
               </p>
             </div>
           </div>
