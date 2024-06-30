@@ -19,10 +19,9 @@ const Step4 = ({ formData, setFormData }: any) => {
       ...prevFormData,
     }));
   };
-  // TO DO : Design these cards
+  // TO DO : Fetch internalCalls dynamically 🟡
 
-  const internalCalls = traceData.internal_calls;
-  // console.log("Internal Calls", internalCalls);
+  const internalCalls = traceData.internal_calls
 
   return (
     <div className="flex gap-12">
