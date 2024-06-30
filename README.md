@@ -23,8 +23,8 @@ AI-Enhanced Transaction Simulator with User-Friendly Insights on Starknet | Buil
 
 ## Links
 
-- [Deployed URL]()
-- [Presentation]()
+- [Deployed URL](https://starknet-txn-simulator.vercel.app/)
+- [Presentation](https://www.canva.com/design/DAGJbRVA4jI/jLrHcBzSNy5vyitAnbMbMg/view?utm_content=DAGJbRVA4jI)
 - [Video Demo]()
 
 ## Deployed Contract on Galadriel Devnet
