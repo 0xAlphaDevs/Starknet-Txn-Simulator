@@ -47,10 +47,6 @@ export const simulateTransaction = async (
       nodeUrl: "https://free-rpc.nethermind.io/mainnet-juno/",
     });
 
-    const privateKey = ""; // not needed for simulation
-    // const contractAddress = address;
-    // const account = new Account(provider, walletAddress, privateKey);
-
     const nonce = await provider.getNonceForAddress(walletAddress); // no of transactions sent by the account
 
     // const chainId = await account?.getChainId();
@@ -61,31 +57,8 @@ export const simulateTransaction = async (
     const entrypoint = selector.getSelectorFromName(functionName); // get the selector for the function
     console.log("Entrypoint:", entrypoint);
 
-    // const call: Call = {
-    //   contractAddress,
-    //   entrypoint,
-    //   calldata: {
-    //     // REPLACE_ME
-    //     recipient:
-    //       "0x036b0Fe7c0f3FB63184Ab34de7992395dBc22d6Ee711C29ebF3e33714f4393b9",
-    //     amount: "0x0",
-    //   },
-    // };
-
-    // const signature = await signTransaction(
-    //   account,
-    //   walletAddress!,
-    //   nonce,
-    //   maxFee,
-    //   version,
-    //   chainId!,
-    //   cairoVersion,
-    //   call
-    // );
-
     const signature: ArraySignatureType = [];
 
-    // Figure out calldata : TO DO
     const calldata = ["0x1", contractAddress, entrypoint, ...functionInputs];
 
     console.log("Calldata:", calldata);

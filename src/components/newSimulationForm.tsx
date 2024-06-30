@@ -77,12 +77,15 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
         setLoading(true);
         setLoadingMessage("Simulating transaction...");
         console.log("Simulating transaction...");
-        // build call data to be sent to the simulateTransaction function
+        // TO DO : build call data to be sent to the simulateTransaction function
         // case 1: no params -- just pass 0x0
         // case 2: no integer type params -- no need to pass 0x0 at the end
         // case 3: integer type params -- pass 0x0 at the end i.e. increment the length of the params array by 1
-        setStep(step + 1);
-        setLoading(false);
+        setTimeout(() => {
+          setLoadingMessage("Transaction simulated successfully");
+          setLoading(false);
+          setStep(step + 1);
+        }, 2000);
       }
     }
   };
