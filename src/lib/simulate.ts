@@ -71,20 +71,23 @@ export const simulateTransaction = async (
       nonce
     );
 
-    console.log("Simulation Response:", simulation);
-    // LATER: decode trace
+    // console.log("Simulation Response:", simulation);
+
+    // decode transaction trace
     if (!simulation[0].transaction_trace.execute_invocation.revert_reason) {
       const trace = await decodeTrace(simulation[0].transaction_trace);
-      // console.log("Final output after decoder :", trace);
       return { ...trace, error: false };
+    } else {
+      return {
+        error: true,
+        errorMesaage: simulation[0].transaction_trace.execute_invocation
+          .revert_reason as string,
+      };
     }
-    return {
-      error: true,
-    };
   } catch (err) {
-    console.error(err);
     return {
       error: true,
+      errorMesaage: err,
     };
   }
 };

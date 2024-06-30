@@ -122,8 +122,8 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
 
         if (transactionTrace.error) {
           toast({
-            title: "Simulation Error",
-            description: "There was an error decoding the transaction trace",
+            title: "Transaction Simulation Failed",
+            // description: transactionTrace.errorMessage,
             variant: "destructive",
           });
           setLoading(false);
