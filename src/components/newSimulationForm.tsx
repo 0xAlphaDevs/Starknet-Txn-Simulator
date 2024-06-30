@@ -28,7 +28,7 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     network: "mainnet",
     // abi: "",
     selectedFunction: "",
-    functionParams: {},
+    functionParams: [],
     functionParamsValues: {},
   });
 
@@ -74,6 +74,34 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
         console.log("Calling after step 2");
         setStep(step + 1);
       } else if (step == 3) {
+        // validate functionParamsValues
+        const params: any = formData.functionParams;
+        const paramsValues: any = formData.functionParamsValues;
+        for (let i = 0; i < params.length; i++) {
+          if (params[i].type.includes("integer")) {
+            //@ts-ignore
+            if (isNaN(paramsValues[params[i].name])) {
+              toast({
+                title: "Invalid input",
+                description: "Please enter a valid integer value",
+                variant: "destructive",
+              });
+              return;
+            }
+          }
+          if (params[i].type.includes("address")) {
+            //@ts-ignore
+            if (!validateStarknetAddress(paramsValues[params[i].name])) {
+              toast({
+                title: "Invalid input",
+                description: "Please enter a valid address",
+                variant: "destructive",
+              });
+              return;
+            }
+          }
+        }
+
         setLoading(true);
         setLoadingMessage("Simulating transaction...");
         console.log("Simulating transaction...");
@@ -96,9 +124,20 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleStartNewSimulation = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
+    setSimulationStarted(false);
+  };
+
+  const handleSaveSimulation = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(formData);
+    toast({
+      title: "Simulation saved",
+      description: "You can view your saved simulations in the dashboard",
+      variant: "default",
+    });
     setSimulationStarted(false);
   };
 
@@ -192,9 +231,17 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
                 </Button>
               </div>
             ) : step === 4 ? (
-              <div className="flex justify-center">
+              <div className="flex gap-8 justify-center ">
                 <Button
-                  onClick={handleSubmit}
+                  onClick={handleStartNewSimulation}
+                  className="rounded-[10px] text-md "
+                  variant={"outline"}
+                >
+                  Start New Simulation
+                </Button>
+
+                <Button
+                  onClick={handleSaveSimulation}
                   className="rounded-[10px] text-md bg-green-500 hover:bg-green-400"
                 >
                   Save Simulation

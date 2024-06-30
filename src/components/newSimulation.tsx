@@ -23,6 +23,7 @@ const NewSimulation = () => {
             setSimulationStarted(true);
           }}
           className="rounded-[10px] text-lg font-semibold"
+          disabled={simulationStarted}
         >
           + New Simulation
         </Button>
