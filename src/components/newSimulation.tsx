@@ -34,7 +34,7 @@ const NewSimulation = () => {
       ) : (
         <div className="flex flex-col gap-8 items-center mt-12">
           <p className="text-2xl font-semibold">
-            Steps to get started with Stark Simulator AI{" "}
+            Steps to get started with Starknet Txn Simulator{" "}
           </p>
           <div className="flex flex-col items-start gap-4 py-8">
             <div className="flex gap-2 items-center ">

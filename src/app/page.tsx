@@ -1,4 +1,3 @@
-
 import WalletBar from "@/components/WalletBar";
 import Image from "next/image";
 import {
@@ -13,17 +12,15 @@ import {
 export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen gap-12">
-      <Image
-        src='/logo.svg'
-        width={150}
-        height={150}
-        alt='Logo'
-      />
+      <Image src="/logo.svg" width={150} height={150} alt="Logo" />
       <div className="flex flex-col items-center gap-2">
         <h1 className="text-4xl font-bold text-primary">
           Welcome to Starknet Txn Simulator !
         </h1>
-        <p className="text-muted-foreground">AI-Enhanced transaction simulator with user-Friendly insights for Starknet blockchain | Built using Galadriel</p>
+        <p className="text-muted-foreground">
+          AI-Enhanced transaction simulator with user-Friendly insights for
+          Starknet blockchain | Built using Galadriel
+        </p>
       </div>
       <WalletBar />
 
@@ -32,23 +29,30 @@ export default function Home() {
           <CardHeader>
             <CardTitle className="text-center ">EASY TO USE AI</CardTitle>
             <CardDescription className="text-center pt-1">
-              Users only need to enter contract addresses. ABIs and function names are aueried and populated autimatically.
+              Users only need to enter contract addresses. ABIs and function
+              names are aueried and populated autimatically.
             </CardDescription>
           </CardHeader>
         </Card>
         <Card className="shadow-sm border-none h-full w-full bg-slate-300 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
           <CardHeader>
-            <CardTitle className="text-center ">CLEAR & CONCISE SIMULATION</CardTitle>
+            <CardTitle className="text-center ">
+              CLEAR & CONCISE SIMULATION
+            </CardTitle>
             <CardDescription className="text-center pt-1">
-              Clear and easy to understand transaction traces data displayed in the web application.s
+              Clear and easy to understand transaction traces data displayed in
+              the web application.
             </CardDescription>
           </CardHeader>
         </Card>
         <Card className="shadow-sm border-none h-full w-full bg-slate-300 rounded-lg bg-opacity-15 border cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110">
           <CardHeader>
-            <CardTitle className="text-center">AI POWERED TXN SUMMARY</CardTitle>
+            <CardTitle className="text-center">
+              AI POWERED TXN SUMMARY
+            </CardTitle>
             <CardDescription className="text-center pt-1">
-              Decentralized & On chain AI inference using Galadriel L1 to generate txn summary.
+              Decentralized & On chain AI inference using Galadriel L1 to
+              generate txn summary.
             </CardDescription>
           </CardHeader>
         </Card>
@@ -56,10 +60,15 @@ export default function Home() {
       <div className="fixed container mx-auto bottom-4">
         <hr className="border-t-1 border-slate-600 mb-4" />
         <div className="flex justify-center items-center">
-          <p className="text-muted-foreground">&copy; <a href="https://www.alphadevs.dev/" target="_blank">alphadevs.dev</a> | All rights reserved.</p>
+          <p className="text-muted-foreground">
+            &copy;{" "}
+            <a href="https://www.alphadevs.dev/" target="_blank">
+              alphadevs.dev
+            </a>{" "}
+            | All rights reserved.
+          </p>
         </div>
       </div>
-
     </main>
   );
 }
