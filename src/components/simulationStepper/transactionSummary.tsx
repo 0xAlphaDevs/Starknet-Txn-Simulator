@@ -39,7 +39,7 @@ const TransactionSummary = ({ internalCalls }: any) => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Summarize Transaction</CardTitle>
+        <CardTitle>AI Transaction Summary</CardTitle>
         <CardDescription>
           You can generate a summary for this transaction simultion using AI
         </CardDescription>
@@ -48,9 +48,13 @@ const TransactionSummary = ({ internalCalls }: any) => {
         {loading ? (
           <div className="flex justify-center py-12">{<Spinner />}</div>
         ) : (
-          <div className="flex justify-center py-12">
+          <div className="flex justify-center py-4">
             {summary ? (
-              summary
+              <div>
+                <p className="text-lg bg-gray-200 p-4 rounded-[10px] shadow-sm">
+                  {summary}
+                </p>
+              </div>
             ) : (
               <Button onClick={handleGenerateSummary}>
                 Generate AI Summary

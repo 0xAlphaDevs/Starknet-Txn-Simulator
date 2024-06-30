@@ -273,12 +273,12 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
                   Start New Simulation
                 </Button>
 
-                <Button
+                {/* <Button
                   onClick={handleSaveSimulation}
                   className="rounded-[10px] text-md bg-green-500 hover:bg-green-400"
                 >
                   Save Simulation
-                </Button>
+                </Button> */}
               </div>
             ) : (
               <div className="flex flex-col gap-4">

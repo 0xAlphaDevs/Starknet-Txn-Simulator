@@ -45,6 +45,24 @@ export const openAiChatAbi = [
   {
     inputs: [
       {
+        internalType: "string",
+        name: "message",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "runId",
+        type: "uint256",
+      },
+    ],
+    name: "addMessage",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "",
         type: "uint256",
@@ -68,12 +86,31 @@ export const openAiChatAbi = [
   },
   {
     inputs: [],
-    name: "chatRunsCount",
+    name: "currentChatId",
     outputs: [
       {
         internalType: "uint256",
         name: "",
         type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "chatId",
+        type: "uint256",
+      },
+    ],
+    name: "getAssistantResponse",
+    outputs: [
+      {
+        internalType: "string[]",
+        name: "",
+        type: "string[]",
       },
     ],
     stateMutability: "view",
@@ -125,25 +162,6 @@ export const openAiChatAbi = [
         internalType: "string[]",
         name: "",
         type: "string[]",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "chatId",
-        type: "uint256",
-      },
-    ],
-    name: "getOpenAIResponse",
-    outputs: [
-      {
-        internalType: "string",
-        name: "",
-        type: "string",
       },
     ],
     stateMutability: "view",
