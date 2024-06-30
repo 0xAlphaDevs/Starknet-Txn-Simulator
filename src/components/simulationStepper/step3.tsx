@@ -63,7 +63,7 @@ const Step3 = ({ formData, setFormData, contractFunctions }: any) => {
               </div>
             ))
           ) : (
-            <div className="flex justify-center opacity-50 font-bold">
+            <div className="flex justify-center opacity-50 font-bold py-20">
               No Params required
             </div>
           )}

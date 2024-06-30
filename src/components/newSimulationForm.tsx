@@ -8,10 +8,18 @@ import Step4 from "./simulationStepper/step4";
 import { DecodedSelector } from "@/lib/decoder";
 import { getFunctionsForContract } from "@/lib/simulate";
 import Spinner from "./spinner";
+import { validateStarknetAddress } from "@/lib/utils";
+import { useToast } from "@/components/ui/use-toast";
+
+interface SimulationResponse {
+  status: boolean;
+  message: string;
+}
 
 const NewSimulationForm = ({ setSimulationStarted }: any) => {
-  const [contractFunctions, setContractFunctions] =
-    React.useState<DecodedSelector>({});
+  const [contractFunctions, setContractFunctions] = React.useState<
+    DecodedSelector | SimulationResponse
+  >({});
   const [step, setStep] = React.useState(1);
   const [loading, setLoading] = React.useState(false);
   const [loadingMessage, setLoadingMessage] = React.useState("");
@@ -24,9 +32,21 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
     functionParamsValues: {},
   });
 
+  const { toast } = useToast();
+
   const handleNextStep = async () => {
     if (step < 4) {
       if (step == 1) {
+        // validate contract address
+        if (!validateStarknetAddress(formData.contractAddress)) {
+          // alert("Invalid contract address");
+          toast({
+            title: "Invalid contract address",
+            description: "Please enter a valid contract address",
+            variant: "destructive",
+          });
+          return;
+        }
         setLoading(true);
         setLoadingMessage("Fetching ABI and listing functions...");
         console.log("Calling after step 1");
@@ -34,8 +54,21 @@ const NewSimulationForm = ({ setSimulationStarted }: any) => {
           formData.contractAddress
         );
         console.log(functions);
+        if (functions.status) {
+          toast({
+            title: "There was an error",
+            description: "Error fetching ABI for this address.",
+            variant: "destructive",
+          });
+          setLoading(false);
+          return;
+        }
         setContractFunctions(functions);
         setStep(step + 1);
+        toast({
+          title: "Successfully fetched contract functions",
+          description: "You can now select a function to simulate",
+        });
         setLoading(false);
       } else if (step == 2) {
         console.log("Calling after step 2");

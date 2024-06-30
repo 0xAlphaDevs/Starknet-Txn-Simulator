@@ -264,11 +264,19 @@ export const getFunctionsForContract = async (contractAddress: string) => {
   const provider = new RpcProvider({
     nodeUrl: NETHERMIND_RPC_URL,
   });
-  const abi = await getAbi(contractAddress, provider);
+  try {
+    const abi = await getAbi(contractAddress, provider);
 
-  const selectors = getSelectors(abi);
-  // console.log("Selectors:", selectors);
-  return selectors;
+    const selectors = getSelectors(abi);
+    // console.log("Selectors:", selectors);
+    return selectors;
+  } catch (error) {
+    return {
+      status: true,
+      message: "Error fetching data",
+    };
+  }
+  // return error;
 };
 
 // simulateTransaction();
