@@ -1,20 +1,2 @@
-export const sampleData1 = `{
-  constant: true,
-  inputs: [],
-  name: "sampleData1",
-}`;
-
-export const sampleData2 = `{
-  constant: true,
-  inputs: [],
-  name: "sampleData1",
-  outputs: [
-    {
-      name: "",
-      type: "string",
-    },
-  ],
-  payable: false,
-  stateMutability: "view",
-  type: "function",
-}`;
+export const sampleContractAddress =
+  "0x053c91253bc9682c04929ca02ed00b3e423f6710d2ee7e0d5ebb06f3ecf368a8";

@@ -1,35 +1,19 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { CopyCheckIcon, CopyIcon } from "lucide-react";
-import { sampleData1, sampleData2 } from "@/lib/sampleData";
+import { sampleContractAddress } from "@/lib/sampleData";
 import NewSimulationForm from "./newSimulationForm";
-import SyntaxHighlighter from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/hljs";
 
 const NewSimulation = () => {
-  const [isCopied1, setIsCopied1] = useState(false);
-  const [isCopied2, setIsCopied2] = useState(false);
+  const [isCopied, setIsCopied] = useState(false);
   const [simulationStarted, setSimulationStarted] = useState(false);
 
   const copyToClipboard = (
     text: string,
-    setCopied: {
-      (value: React.SetStateAction<boolean>): void;
-      (value: React.SetStateAction<boolean>): void;
-      (arg0: boolean): void;
-    }
   ) => {
     navigator.clipboard.writeText(text).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
     });
   };
 
@@ -49,76 +33,42 @@ const NewSimulation = () => {
       {simulationStarted ? (
         <NewSimulationForm setSimulationStarted={setSimulationStarted} />
       ) : (
-        <div className="flex flex-col gap-8 items-center mt-40">
-          <p className="text-lg font-medium">
-            Click on the New Simulation button to simulate a transaction on
-            Starknet{" "}
+        <div className="flex flex-col gap-8 items-center mt-32">
+          <p className="text-4xl font-semibold">
+            Steps to get started with Stark Simulator AI{" "}
           </p>
-          <div className="flex gap-8">
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="rounded-[10px] text-md">Sample 1</Button>
-              </DialogTrigger>
-              <DialogContent className="h-[80vh] w-[60vw] overflow-hidden">
-                <DialogHeader>
-                  <DialogTitle className="flex justify-center mb-4">
-                    Sample Data 1
-                  </DialogTitle>
-                  <DialogDescription className="h-full">
-                    <div className="relative h-full">
-                      <SyntaxHighlighter language="javascript" style={dark} customStyle={{ background: 'black', borderRadius: '15px', padding: '10px' }}>
-                        {sampleData1}
-                      </SyntaxHighlighter>
-                      <button
-                        onClick={() =>
-                          copyToClipboard(sampleData1, setIsCopied1)
-                        }
-                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
-                      >
-                        {isCopied1 ? (
-                          <CopyCheckIcon className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <CopyIcon className="h-4 w-4 text-white" />
-                        )}
-                      </button>
-                    </div>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+          <div className="flex flex-col items-start gap-4 py-8">
+            <div className="flex gap-2 items-center text-xl">
+              <p> 1. </p>
+              <p> Click on new simulation 👆🏻 button to get started</p>
+            </div>
+            <div className="flex gap-2 text-xl">
+              <p>2.</p>
+              <div className="flex flex-col gap-2 items-start">
+                <p> Copy your contract address </p>
+                <p className="text-muted-foreground text-sm">For Example : USDC contract address</p>
+                <div className="bg-black p-2 rounded-[15px] text-white flex gap-4 w-full">
 
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button className="rounded-[10px] text-md">Sample 2</Button>
-              </DialogTrigger>
-              <DialogContent className="h-[80vh] w-[60vw] overflow-hidden">
-                <DialogHeader>
-                  <DialogTitle className="flex justify-center mb-4">
-                    Sample Data 2
-                  </DialogTitle>
-                  <DialogDescription className="h-full">
-                    <div className="relative h-full">
-                      <SyntaxHighlighter language="javascript" style={dark} customStyle={{ background: 'black', borderRadius: '15px', padding: '10px' }}
-                      >
-                        {sampleData2}
-                      </SyntaxHighlighter>
-                      <button
-                        onClick={() =>
-                          copyToClipboard(sampleData2, setIsCopied2)
-                        }
-                        className="absolute top-2 right-2 p-1 text-sm rounded-[20px]"
-                      >
-                        {isCopied2 ? (
-                          <CopyCheckIcon className="h-4 w-4 text-green-500" />
-                        ) : (
-                          <CopyIcon className="h-4 w-4 text-white" />
-                        )}
-                      </button>
-                    </div>
-                  </DialogDescription>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+                  <p className="text-md">{sampleContractAddress}</p>
+                  <button
+                    onClick={() =>
+                      copyToClipboard(sampleContractAddress)
+                    }
+                    className=" p-1 text-sm rounded-[20px]"
+                  >
+                    {isCopied ? (
+                      <CopyCheckIcon className="h-4 w-4 text-green-500" />
+                    ) : (
+                      <CopyIcon className="h-4 w-4 text-white" />
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-2 items-center text-xl">
+              <p> 3. </p>
+              <p> Select the function and enter the params to simulate a transaction :/</p>
+            </div>
           </div>
         </div>
       )}
