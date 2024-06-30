@@ -1,21 +1,33 @@
-## StarkSimulatorAI
+## Starknet Txn Simulator
 
 AI-Enhanced Transaction Simulator with User-Friendly Insights on Starknet | Built using Galadriel
+
+## Features
+
+- **Easy To Use UI** : Users only need to enter contract addresses. ABIs and function names are aueried and populated autimatically.
+- **Clear & Concise Simulations** : Clear and easy to understand transaction traces data displayed in the web application.
+- **AI Powered Txn Summary** : Decentralized & On chain AI inference using Galadriel L1 to generate txn summary.
 
 ## Table of Contents
 
 1. [All Links](#links)
-2. [Instructions to setup and run locally ](#instructions-to-setup)
-3. [Our Solution (Architecture)](#our-solution-architecture)
-4. [Future Vision](#future-vision)
-5. [App Demo](#app-demo-screenshots)
-6. [Tech Stack](#tech-stack)
-7. [Team](#team)
+2. [Deployed Contracts](#deployed-contract-on-galadriel-devnet)
+3. [Instructions to setup and run locally ](#instructions-to-setup)
+4. [Our Solution (Architecture)](#our-solution-architecture)
+5. [Future Vision](#future-vision)
+6. [App Demo](#app-demo-screenshots)
+7. [Tech Stack](#tech-stack)
+8. [Team](#team)
 
 ## Links
 
 - [Deployed URL]()
 - [Presentation]()
+- [Video Demo]()
+
+## Deployed Contract on Galadriel Devnet
+
+- Galadriel Devnet Contract - [0xCCF31d992aa2616E47B1c0860fD1e4787892dF49](https://explorer.galadriel.com/address/0xCCF31d992aa2616E47B1c0860fD1e4787892dF49)
 
 ## Instructions to Setup
 
@@ -25,6 +37,7 @@ Follow these instructions to set up and run the project:
 
 - Clone the Git repository: `https://github.com/0xAlphaDevs/StarkSimulatorAI.git`
 - Install project dependencies: `npm install`
+- Copy .env.example
 - Start the development server: `npm run dev`
 - Access the web app in your browser at [http://localhost:3000](http://localhost:3000)
 
@@ -34,27 +47,34 @@ Follow these instructions to set up and run the project:
 
 ## Future Vision
 
+- Integrate txn simulator with dApps on starknet. Develep a widget/extension for this purpose in upcoming steps.
+- Support chaining of multiple transactions
+- Better UI and support for complex data types decoding for Starknet blockchain
+
 ## App Demo Screenshots
 
-![image](/public/appDemo/1.png)
+![image](/public/appDemo/1.jpeg)
 
-![image](/public/appDemo/2.jpg)
+![image](/public/appDemo/2.jpeg)
 
-![image](/public/appDemo/3.jpg)
+![image](/public/appDemo/3.jpeg)
 
-![image](/public/appDemo/4.jpg)
+![image](/public/appDemo/4.jpeg)
 
-![image](/public/appDemo/5.jpg)
+![image](/public/appDemo/5.jpeg)
 
-![image](/public/appDemo/6.jpg)
+![image](/public/appDemo/6.jpeg)
 
-![image](/public/appDemo/7.jpg)
+![image](/public/appDemo/7.jpeg)
 
-![image](/public/appDemo/8.jpg)
+![image](/public/appDemo/8.jpeg)
 
 ## Tech Stack
 
--
+- Starknet.js
+- Starknet/@react-core
+- Galadriel L1 Devnet
+- Next JS
 
 ## Team
 
